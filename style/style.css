@@ -1,0 +1,135 @@
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif 
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    background-color: #337ab7;
+    padding: 13px;
+}
+.navbarFt,.navbarSnd{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.navbarSnd a{
+    color:white;
+    text-decoration: none;
+
+}
+.navbarSnd a:hover{
+    text-decoration:underline;
+}
+h2{
+    color:white;
+}
+.mainSection{
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+    
+}
+.main{
+    background-color: #d8e4f0;
+    height:91vh;
+}
+    
+
+.inputs{
+    border: none;
+    border-bottom: 1px solid #606060;
+    width: 300px;
+    outline: none;
+    padding: 10px;
+}
+h1{
+    text-align: center;
+    color: #337ab7;
+}
+.inputContz{
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+.mainBodyFt{
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    padding: 125px 20px 125px 20px;
+    background-color: #337ab7;
+    width: 12%;
+}
+
+.loginBtn a{
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    border: 1px solid #2874F0;
+    padding: 10px;
+    border-radius: 10px;
+    color: #337ab7;
+}
+.singinTxt{
+    text-align: center;
+}
+.anotherAccess{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.registerCont{
+    display: flex;
+    justify-content: center;
+    gap:10px;
+}
+.loginBtn{
+    margin-top:20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.mainBodySndCont{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.registerCont a{
+    color: #2874F0;
+    text-decoration: none;
+}
+.mainBodySnd{
+    background-color: white;
+    padding: 20px;
+}
+
+.submitBtn{
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #2874F0;
+    color: #337ab7;
+    background-color: #d8e4f0;
+    cursor:pointer;
+    
+}
+.mainBodySndd{
+    background-color: white;
+    padding: 10px;
+}
+.mainSectionn{
+    display: flex;
+    justify-content: center;
+    padding: 28px;
+    
+}
+
+
+
+
+
+
