@@ -1,33 +1,38 @@
 $(document).ready(function(){
     /*SIGN IN*/
     $("#submitClick").click(function () {
-        var fullName=$("#fullName").val().trim();
+        /*var fullName=$("#fullName").val().trim();
         var emailId=$("#email").val().trim();
         var userName=$("#userName").val().trim();
         var password=$("#password").val().trim();
+        var file=$('#myfile')[0].files[0];*/
+
+        var formData = new FormData();
+        formData.append("fullName", $("#fullName").val().trim());
+        formData.append("emailId", $("#email").val().trim());
+        formData.append("userName", $("#userName").val().trim());
+        formData.append("password", $("#password").val().trim());
+        formData.append("myfile", $('#myfile')[0].files[0]);
+        
+
        if(signValidation()){
-            $.ajax({
+         $.ajax({
                 type: "POST",
                 url: "./component/addressBook.cfc?method=signUpload",
                 datatype: "text",
-                data: {fullName:fullName,
-                    emailId: emailId,
-                    userName:userName,
-                    password: password,
-                },
-             
+                data: formData,
                 success: function(response) {
                     console.log(response);
                     if (response =="true") {
                         alert("Form submitted successfully!");
                         window.location.href = "./loginPage.cfm";
-                    } else { 
+                    } else if(response=="false"){ 
                         alert("Username already exists!");
                         window.location.reload();
                     }
                 },
                 error: function(xhr, status, error) { 
-                    console.error(error);
+                    /*console.error(error);*/
                     alert("An error occurred while submitting the form. Please try again.");
                 }
             });
@@ -70,15 +75,18 @@ $(document).ready(function(){
 });
 function signValidation(){
     var fullName=$("#fullName").val().trim();
+    var file=$("#myfile").val().trim();
     var emailId=$("#email").val().trim();
     var userName=$("#userName").val().trim();
     var password=$("#password").val().trim();
     var confirmPassword=$("#confirmPassword").val().trim();
     $(".error").hide();
     var isValid = true;
-    if(fullName=="" && emailId=="" && userName=="" && password=="" && confirmPassword==""){
+    if(fullName=="" && file=="" && emailId=="" && userName=="" && password=="" && confirmPassword==""){
         $("#fullNameError").html("This field is required. Please enter a value.").css("color","red");
         $("#fullNameError").show();
+        $("#fileError").html("This field is required. Please enter a value.").css("color","red");
+        $("#fileError").show();
         $("#emailError").html("This field is required. Please enter a value.").css("color","red");
         $("#emailError").show();
         $("#usernameError").html("This field is required. Please enter a value.").css("color","red");
@@ -94,6 +102,11 @@ function signValidation(){
         $("#fullNameError").html("Please enter the full name").css("color","red");
         $("#fullNameError").show();
         isValid = false;
+        }
+        if(file==""){
+            $("#fileError").html("Please fill the field").css("color","red");
+            $("#fileError").show();
+            isValid = false;
         }
         
         if(!(/\S+@\S+\.\S+/.test(emailId)) || emailId==""){

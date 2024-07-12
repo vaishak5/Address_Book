@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up Page</title>
     <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="./style/jquery-ui.css">
@@ -34,7 +32,7 @@
             <div class="mainBodySndd">
                 <h1>SIGN UP</h1>
                 <div class="mainBodySndCont">
-                    <form class="inputContz">
+                    <form class="inputContz" enctype="multipart/form-data" method="post">
                         <input type="text" class="inputs" placeholder="Full Name" id="fullName">
                         <span id="fullNameError" class="error"></span>
                         <input type="email" class="inputs" placeholder="Email ID" id="email">
@@ -45,6 +43,9 @@
                         <span id="passwordError" class="error"></span>
                         <input type="password" class="inputs" placeholder="Confirm Password" id="confirmPassword">
                         <span id="confirmError" class="error"></span>
+                        <label for="myfile" class="fileSet">Select a file:</label>
+                        <input type="file" id="myfile" class="inputsFile" name="myfile" accept="image/jpeg,image/png,image/webp,image/gif">
+                        <span id="fileError" class="error"></span>
                         <input type="button" class="submitBtn" id="submitClick" value="Register">
                     </form>
                 </div>
