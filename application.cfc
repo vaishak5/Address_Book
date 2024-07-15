@@ -8,6 +8,8 @@
     <cffunction name="onSessionStart" returnType="boolean" output="false">
         <cfset session.login=false>
         <cfset session.userId = "">
+        <cfset session.fullName = "">
+         <cfset session.imgFile = "">
         <cfreturn true>
     </cffunction>  
 </cfcomponent>

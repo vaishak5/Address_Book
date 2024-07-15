@@ -1,38 +1,39 @@
 $(document).ready(function(){
     /*SIGN IN*/
     $("#submitClick").click(function () {
-        /*var fullName=$("#fullName").val().trim();
+        var fullName=$("#fullName").val().trim();
         var emailId=$("#email").val().trim();
         var userName=$("#userName").val().trim();
         var password=$("#password").val().trim();
-        var file=$('#myfile')[0].files[0];*/
-
+        var file=$('#myfile')[0].files[0];
         var formData = new FormData();
-        formData.append("fullName", $("#fullName").val().trim());
-        formData.append("emailId", $("#email").val().trim());
-        formData.append("userName", $("#userName").val().trim());
-        formData.append("password", $("#password").val().trim());
-        formData.append("myfile", $('#myfile')[0].files[0]);
-        
-
-       if(signValidation()){
+        formData.append("fullName",fullName) ;
+        formData.append("emailId", emailId);
+        formData.append("userName", userName);
+        formData.append("password", password);
+        formData.append("myfile", file);
+        if(signValidation()){
          $.ajax({
                 type: "POST",
                 url: "./component/addressBook.cfc?method=signUpload",
+                processData: false,
+                contentType: false,
                 datatype: "text",
                 data: formData,
                 success: function(response) {
-                    console.log(response);
-                    if (response =="true") {
-                        alert("Form submitted successfully!");
+                    if(response === "true"){
+                        console.log(response);
+                        alert("New User added Successfully");
                         window.location.href = "./loginPage.cfm";
-                    } else if(response=="false"){ 
-                        alert("Username already exists!");
-                        window.location.reload();
                     }
+                    else if(response === "false"){
+                        console.log(response);
+                        alert("User Already exists!");
+                    }
+                    
                 },
                 error: function(xhr, status, error) { 
-                    /*console.error(error);*/
+                    console.error(error);
                     alert("An error occurred while submitting the form. Please try again.");
                 }
             });
@@ -71,7 +72,12 @@ $(document).ready(function(){
                 }
             });
         }
-    });   
+    });
+    
+    /*Create Contact Page*/
+    $('#create').click(function() {
+        window.location.href = 'createContact.cfm';
+    });
 });
 function signValidation(){
     var fullName=$("#fullName").val().trim();

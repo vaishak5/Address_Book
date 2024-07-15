@@ -218,6 +218,18 @@ h1{
 .navbarFt h3{
     color:white;
 }
+.heading{
+    padding-top: 10px;
+}
+.heading h3{
+    color:#338fc5;
+}
+.creating{
+    background-color: #add8e6;
+}
+.personal{
+    border-bottom:2px solid #338fc5;
+}
 
 
 

@@ -1,9 +1,10 @@
+<cfoutput>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>List Page</title>
     <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="./style/jquery-ui.css">
     <link rel="stylesheet" href="./style/bootstrap.min.css">
@@ -13,8 +14,10 @@
     <script src="./script/jquery.min.js"></script>
     <script src="./script/jquery-ui.min.js"></script>
     <script src="./script/validation.js"></script>
+    <script src="./script/modalJS.js"></script>
 </head>
 <body>
+<cfif session.login>
     <div class="navbar px-5">
         <div class="navbarFt">
             <img class="addressLogo" src="./assets/bodyBook.png" alt="img" width="30" height="30">
@@ -22,7 +25,7 @@
         </div>
         <div class="navbarSndSet">
             <img class="loginLogo" src="./assets/logout.png" alt="img" width="20" height="20">
-            <a href="loginPage.cfm">Logout</a>
+            <a href="./component/addressBook.cfc?method=doLogout">Logout</a>
         </div>
     </div>
 
@@ -40,11 +43,37 @@
             <div class="bodySnd">
                 <div class="d-flex flex-column  bg-light text-dark me-2 text-center rounded">  
                     <div class="userProfile p-2">
-                        <img src="./assets/google.png" class="rounded-circle img-fluid" alt="img" width="100">
+                        <img src="./assets/#session.imgFile#" class="rounded-circle img-fluid" alt="img" width="100">
                     </div>
-                    <div class="userName p-2 ">Name</div>
+                    <div class="userName p-2 ">#session.fullName#</div>
                         <div class="p-2 ">
-                            <button type="button" class="btn btn-primary">Create Contact</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">Create Contact</button>
+                            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modalContent bg-white px-5">
+                                        <div class="headings col-8">
+                                            <div class="heading d-flex justify-content-center w-100">
+                                                <h3 class="creating px-4 w-100">CREATE CONTACT</h3>
+                                            </div>
+                                            <div class="nextHeading mt-3 w-100 d-flex justify-content-center">
+                                                <h5 class="personal w-100 d-flex">Personal Contact</h5>
+                                            </div>
+                                        </div>
+                                        <div class="inputFields col-8">
+                                            <form class="inputSet">
+                                                <label for="title">Title</label><br>
+                                                <input type="text" name="title"></input>
+                                                <label for="fname">First Name</label><br>
+                                                <input type="text" name="fname"></input>
+                                                <label for="lname">Last Name</label><br>
+                                                <input type="text" name="lname"></input>
+                                                
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,5 +100,9 @@
             
         </div>
     </div>
+    <cfelse>
+         <cflocation  url="loginPage.cfm">
+   </cfif> 
 </body>
 </html>
+</cfoutput>

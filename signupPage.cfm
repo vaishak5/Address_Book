@@ -12,6 +12,9 @@
     <script src="./script/validation.js"></script>
 </head>
 <body>
+<cfif session.login>
+    <cflocation url="loginPage.cfm">
+<cfelse>
     <div class="navbar">
         <div class="navbarFt">
             <img class="addressLogo" src="./assets/bodyBook.png" alt="img" width="30" height="30">
@@ -52,5 +55,6 @@
             </div>
         </div>
     </div>
+</cfif>
 </body>
 </html>
