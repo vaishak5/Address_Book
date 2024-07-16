@@ -74,11 +74,31 @@ $(document).ready(function(){
         }
     });
     
-    /*Create Contact Page*/
-    $('#create').click(function() {
-        window.location.href = 'createContact.cfm';
+    /*Create Contact(Entering new datas into the form)*/
+    $("#dataCreating").click(function (){
+        var title=$("#titles").val().trim();
+        var firstName=$("#firstName").val().trim();
+        var lastName=$("#lastName").val().trim();
+        var gender=$("#gender").val().trim();
+        var dob=$("#dob").val().trim();
+        var profile=$("#profile").val().trim();
+        var address=$("#address").val().trim();
+        var street=$("#street").val().trim();
+        var phoneNum=$("#phoneNumber").val().trim();
+        var email=$("#email").val().trim();
+        var pincode=$("#pincode").val().trim();
+        if(formValidation){
+            if( title=="" || firstName=="" || lastName=="" || gender=="" || dob=="" || profile=="" || address=="" || street=="" ||  phoneNum=="" || email=="" || pincode){
+                alert("This field is required Plz enter any values in the given fields!!!");
+                return;
+            };
+        }
     });
 });
+
+
+
+
 function signValidation(){
     var fullName=$("#fullName").val().trim();
     var file=$("#myfile").val().trim();
@@ -153,4 +173,72 @@ function signValidation(){
 function isValidPassword(password) {
     var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     return passwordRegex.test(password);
+}
+function formValidation(){
+    var title=$("#titles").val().trim();
+    var firstName=$("#firstName").val().trim();
+    var lastName=$("#lastName").val().trim();
+    var gender=$("#gender").val().trim();
+    var dob=$("#dob").val().trim();
+    var profile=$("#profile").val().trim();
+    var address=$("#address").val().trim();
+    var street=$("#street").val().trim();
+    var phoneNum=$("#phoneNumber").val().trim();
+    var email=$("#email").val().trim();
+    var pincode=$("#pincode").val().trim();
+    var isValid=true;
+    if( title=="" && firstName==""&& lastName=="" && gender=="" && dob=="" && profile=="" && address=="" && street=="" &&  phoneNum=="" && email=="" && pincode){
+        alert("This field is required...Plz enter any values in the given fields!!!");
+        isValid = false;
+    }
+    else{
+        if(title===""){
+            alert("Please enter any value in the Title field");
+            isValid = false;
+        }
+        if(firstName==""){
+            alert("Please enter any value in the FirstName field");
+            isValid = false;
+        }
+        if(lastName==""){
+            alert("Please enter any value in the LastName field");
+            isValid = false;
+        }
+        if(gender==""){
+            alert("Please enter any value in the Gender field");
+            isValid = false;
+        }
+        if(dob==""){
+            alert("Please enter any value in the DOB field");
+            isValid = false;
+        }
+        if(profile==""){
+            alert("Please select any value in the File field");
+            isValid = false;
+        }
+        if(address==""){
+            alert("Please enter any value in the Address field");
+            isValid = false;
+        }
+        if(street==""){
+            alert("Please enter any value in the Street field");
+            isValid = false;
+        }
+        if(phoneNum==""){
+            alert("Please enter any value in the Phone Number field");
+            isValid = false;
+        }
+        if(email==""){
+            alert("Please enter any value in the Email field");
+            isValid = false;
+        }
+        if(pincode==""){
+            alert("Please enter any value in the Pincode field");
+            isValid = false;
+        }
+    }
+    if(isValid){
+        return true;
+    }
+    return false;
 }

@@ -58,4 +58,20 @@
         <cfset session.login=false>
         <cflocation url="../loginPage.cfm">
     </cffunction>
+
+    <!---Adding new datas to the field--->
+    <cffunction name="dataUpload" access="remote" returnFormat="plain">
+        <cfargument  name="title" required="true"> 
+        <cfargument  name="firstName" required="true">
+        <cfargument  name="lastName" required="true">
+        <cfargument  name="gender" required="true">
+        <cfargument  name="dob" required="true">
+        <cfargument  name="file" required="true">
+        <cfargument  name="address" required="true">
+        <cfargument  name="street" required="true">
+        <cfargument  name="phoneNumber" required="true">
+        <cfargument  name="email" required="true">
+        <cfargument  name="pincode" required="true">
+    </cffunction>
+
 </cfcomponent>

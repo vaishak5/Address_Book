@@ -230,7 +230,65 @@ h1{
 .personal{
     border-bottom:2px solid #338fc5;
 }
+.inputFields{
+    font-size:14px;
+    color: #338fc5;
+    font-weight:bold;
+}
+.firstName input[type=text]{
+    border-right: none;
+    border-left: none;
+    border-top: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+    outline: none;
+}
+.lastName input[type=text]{
+    border-right: none;
+    border-left: none;
+    border-top: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+    outline: none;
+}
+.lastName input[type=email]{
+    border-right: none;
+    border-left: none;
+    border-top: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+    outline: none;
+}
 
+.footer{
+    border: none;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+}
+.save{
+    margin: 0px;
+}
+.dateSet input[type=date]{
+    border-right: none;
+    border-left: none;
+    border-top: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+    outline:none;
+}
+.nextHeading h5{
+    color: #338fc5;
+    
+}
+#myfile{
+    color:black;
+}
+.secondMain{
+    background-color: #aac4dd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fullBody{
+    background-color: #aac4dd;
+}
 
 
 
