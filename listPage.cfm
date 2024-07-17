@@ -147,6 +147,7 @@
                                                             </div>
                                                         </form>
                                                     </div>
+                                                    <span id="errorMsg" class="errorTxt"></span>
                                                     <!---Close--->
                                                     <div class="footer col-8 py-3 gap-3">
                                                         <button type="button" class="btn btn-primary" id="dataCreating">Submit</button>
@@ -183,6 +184,9 @@
                                  </th>
                               </tr>
                            </thead>
+                           <tbody>
+                            
+                            </tbody>
                         </table>
                     </div>
                 </div>

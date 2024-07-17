@@ -75,29 +75,62 @@ $(document).ready(function(){
     });
     
     /*Create Contact(Entering new datas into the form)*/
-    $("#dataCreating").click(function (){
-        var title=$("#titles").val().trim();
-        var firstName=$("#firstName").val().trim();
-        var lastName=$("#lastName").val().trim();
-        var gender=$("#gender").val().trim();
-        var dob=$("#dob").val().trim();
-        var profile=$("#profile").val().trim();
-        var address=$("#address").val().trim();
-        var street=$("#street").val().trim();
-        var phoneNum=$("#phoneNumber").val().trim();
-        var email=$("#email").val().trim();
-        var pincode=$("#pincode").val().trim();
-        if(formValidation){
-            if( title=="" || firstName=="" || lastName=="" || gender=="" || dob=="" || profile=="" || address=="" || street=="" ||  phoneNum=="" || email=="" || pincode){
-                alert("This field is required Plz enter any values in the given fields!!!");
-                return;
-            };
+    $("#dataCreating").click(function () {
+        var title = $("#titles").val().trim();
+        var firstName = $("#firstName").val().trim();
+        var lastName = $("#lastName").val().trim();
+        var gender = $("#gender").val().trim();
+        var dob = $("#dob").val().trim();
+        var profile = $("#profile")[0].files[0];
+        var address = $("#address").val().trim();
+        var street = $("#street").val().trim();
+        var phoneNum = $("#phoneNumber").val().trim();
+        var email = $("#email").val().trim();
+        var pincode = $("#pincode").val().trim();
+        
+        var formData = new FormData();
+        formData.append("title", title);
+        formData.append("firstName", firstName);
+        formData.append("lastName", lastName);
+        formData.append("gender", gender);
+        formData.append("dob", dob);
+        formData.append("profile", profile);
+        formData.append("address", address);
+        formData.append("street", street);
+        formData.append("phoneNumber", phoneNum); // Ensure this matches ColdFusion argument name
+        formData.append("email", email);
+        formData.append("pincode", pincode);
+        
+        if (formValidation()) {
+            $.ajax({
+                type: "POST",
+                url: "./component/addressBook.cfc?method=dataUpload",
+                contentType: false,
+                processData: false,
+                dataType: "text",
+                data: formData,
+                success: function(response) {
+                    if (response === "true") {
+                        alert("New datas are added!!");
+                    }
+                    else if(response === "false") {
+                        alert("Datas already present!!");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert("An error occurred while submitting the form. Please try again.");
+                }
+            });
         }
     });
+    
 });
 
 
 
+
+/*SIGN UP*/
 
 function signValidation(){
     var fullName=$("#fullName").val().trim();
@@ -170,75 +203,76 @@ function signValidation(){
     }
     return false;
 }
+/*VALIDATE PASSWORD*/
+
 function isValidPassword(password) {
     var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     return passwordRegex.test(password);
 }
-function formValidation(){
-    var title=$("#titles").val().trim();
-    var firstName=$("#firstName").val().trim();
-    var lastName=$("#lastName").val().trim();
-    var gender=$("#gender").val().trim();
-    var dob=$("#dob").val().trim();
-    var profile=$("#profile").val().trim();
-    var address=$("#address").val().trim();
-    var street=$("#street").val().trim();
-    var phoneNum=$("#phoneNumber").val().trim();
-    var email=$("#email").val().trim();
-    var pincode=$("#pincode").val().trim();
-    var isValid=true;
-    if( title=="" && firstName==""&& lastName=="" && gender=="" && dob=="" && profile=="" && address=="" && street=="" &&  phoneNum=="" && email=="" && pincode){
-        alert("This field is required...Plz enter any values in the given fields!!!");
+
+/*CREATE CONTACT*/
+
+function formValidation() {
+    var title = $("#titles").val().trim();
+    var firstName = $("#firstName").val().trim();
+    var lastName = $("#lastName").val().trim();
+    var gender = $("#gender").val().trim();
+    var dob = $("#dob").val().trim();
+    var profile = $("#profile").val().trim();
+    var address = $("#address").val().trim();
+    var street = $("#street").val().trim();
+    var phoneNum = $("#phoneNumber").val().trim();
+    var email = $("#email").val().trim();
+    var pincode = $("#pincode").val().trim();
+    var isValid = true;
+    var errorMsg = [];
+    if (title === "" || firstName === "" || lastName === "" || gender === "" || dob === "" || profile === "" || address === "" || street === "" || phoneNum === "" || email === "" || pincode === "") {
+        errorMsg.push("All fields are required!");
         isValid = false;
-    }
-    else{
-        if(title===""){
-            alert("Please enter any value in the Title field");
+    } else {
+        if (title === "") {
+            errorMsg.push("Please select a title.");
             isValid = false;
-        }
-        if(firstName==""){
-            alert("Please enter any value in the FirstName field");
+        } if (firstName === "" || /\d/.test(firstName) || firstName.length > 20) {
+            errorMsg.push("Please enter a valid first name (up to 20 characters, no digits).");
             isValid = false;
-        }
-        if(lastName==""){
-            alert("Please enter any value in the LastName field");
+        } if (lastName === "" || /\d/.test(lastName) || lastName.length > 20) {
+            errorMsg.push("Please enter a valid last name (up to 20 characters, no digits).");
             isValid = false;
-        }
-        if(gender==""){
-            alert("Please enter any value in the Gender field");
+        } if (gender === "") {
+            errorMsg.push("Please select a gender.");
             isValid = false;
-        }
-        if(dob==""){
-            alert("Please enter any value in the DOB field");
+        } if (dob === "") {
+            errorMsg.push("Please enter a date of birth.");
             isValid = false;
-        }
-        if(profile==""){
-            alert("Please select any value in the File field");
+        } if (profile === "") {
+            errorMsg.push("Please select a profile picture.");
             isValid = false;
-        }
-        if(address==""){
-            alert("Please enter any value in the Address field");
+        }  if (address === "" || address.length > 100) {
+            errorMsg.push("Please enter a valid address (up to 100 characters).");
             isValid = false;
-        }
-        if(street==""){
-            alert("Please enter any value in the Street field");
+        } if (street === "" || street.length > 50) {
+            errorMsg.push("Please enter a valid street (up to 50 characters).");
             isValid = false;
-        }
-        if(phoneNum==""){
-            alert("Please enter any value in the Phone Number field");
+        } if (phoneNum === "" || !(/^\d{10}$/.test(phoneNum))) {
+            errorMsg.push("Please enter a valid 10-digit phone number.");
             isValid = false;
-        }
-        if(email==""){
-            alert("Please enter any value in the Email field");
+        } if (email === "" || !(/\S+@\S+\.\S+/.test(email))) {
+            errorMsg.push("Please enter a valid email address.");
             isValid = false;
-        }
-        if(pincode==""){
-            alert("Please enter any value in the Pincode field");
+        }  if (pincode === "" || !(/^\d{6}$/.test(pincode))) {
+            errorMsg.push("Please enter a valid 6-digit pincode.");
             isValid = false;
         }
     }
-    if(isValid){
-        return true;
+    // Display the error message
+    if (errorMsg.length > 0) {
+        var errorMessages = errorMsg.join("<br>");
+        $("#errorMsg").html(errorMessages).css("color", "red");
+        return false; 
+    } else {
+        $("#errorMsg").html("Data added successfully.").css("color", "green");
+        return true; 
     }
-    return false;
 }
+

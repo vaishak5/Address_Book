@@ -235,26 +235,13 @@ h1{
     color: #338fc5;
     font-weight:bold;
 }
-.firstName input[type=text]{
+.firstName input[type=text], .lastName input[type=text],.lastName input[type=email],.dateSet input[type=date]{
     border-right: none;
     border-left: none;
-    border-top: 2px solid #808080;
-    border-bottom: 2px solid #808080;
+    border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
     outline: none;
-}
-.lastName input[type=text]{
-    border-right: none;
-    border-left: none;
-    border-top: 2px solid #808080;
-    border-bottom: 2px solid #808080;
-    outline: none;
-}
-.lastName input[type=email]{
-    border-right: none;
-    border-left: none;
-    border-top: 2px solid #808080;
-    border-bottom: 2px solid #808080;
-    outline: none;
+    height: 30px;
 }
 
 .footer{
@@ -266,18 +253,11 @@ h1{
 .save{
     margin: 0px;
 }
-.dateSet input[type=date]{
-    border-right: none;
-    border-left: none;
-    border-top: 2px solid #808080;
-    border-bottom: 2px solid #808080;
-    outline:none;
-}
 .nextHeading h5{
     color: #338fc5;
     
 }
-#myfile{
+#profile{
     color:black;
 }
 .secondMain{
@@ -289,6 +269,7 @@ h1{
 .fullBody{
     background-color: #aac4dd;
 }
+
 
 
 
