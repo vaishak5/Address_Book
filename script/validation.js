@@ -87,7 +87,6 @@ $(document).ready(function(){
         var phoneNum = $("#phoneNumber").val().trim();
         var email = $("#email").val().trim();
         var pincode = $("#pincode").val().trim();
-        
         var formData = new FormData();
         formData.append("title", title);
         formData.append("firstName", firstName);
@@ -111,7 +110,7 @@ $(document).ready(function(){
                 data: formData,
                 success: function(response) {
                     if (response === "true") {
-                        alert("New datas are added!!");
+                        window.location.href = "./listPage.cfm";
                     }
                     else if(response === "false") {
                         alert("Datas already present!!");
@@ -124,8 +123,57 @@ $(document).ready(function(){
             });
         }
     });
+
+    /*Deleting Rows*/
+    $(".delete").click( function () {
+        var contactId = $(this).attr("data-id");
+        var deleting=$(this);
+        $.ajax({
+            type: "POST",
+            url: './component/addressBook.cfc?method=deleteDatas',
+            dataType: "text",
+            data: { contactId: contactId },
+            success: function(response) {
+                alert("Data is deleted successfully!!");
+                $(deleting).parents("tr").remove();//remove previous row element datas
+    
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert("Error deleting record.");
+            }
+        });
+    });
+
+    /*View Full Data Row*/
+    $(".view").click(function() {
+        var contactId = $(this).data("id");
+        $.ajax({
+            type: "POST",
+            url: "./component/addressBook.cfc?method=viewDatas",
+            dataType: "text", 
+            data: {
+                contactId: contactId
+            },
+            success: function(response) {
+                
+                console.log(response); 
+                
+                alert("Success! Data received. Check console for details.");
+                
+                $("#firstName").val(response.firstName); 
+                $("#lastName").val(response.lastName);
+                
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", status, error); 
+                alert("Failed to retrieve data."); 
+            }
+        });
+    });
     
 });
+
 
 
 

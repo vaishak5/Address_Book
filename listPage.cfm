@@ -171,8 +171,11 @@
                 <div class="bodyThd">
                     <div class="tableStyle d-flex align-items-center justify-content-center">
                         <table class="table table-hover">
-                           <thead>
-                              <tr>
+                           <thead class="col-12">
+                              <tr class="col-12">
+                                 <th class="titleValues" scope="col-3">
+                                    <h6><b></b></h6>
+                                 </th> 
                                  <th class="titleValues" scope="col-3">
                                     <h6><b>NAME</b></h6>
                                  </th> 
@@ -182,10 +185,36 @@
                                  <th class="titleValues" scope="col">
                                     <h6><b>MOBILE NUMBER</b></h6>
                                  </th>
+                                 <th class="titleValues" scope="col">
+                                    <h6><b></b></h6>
+                                 </th>
+                                 <th class="titleValues" scope="col">
+                                    <h6><b></b></h6>
+                                 </th>
+                                 <th class="titleValues" scope="col">
+                                    <h6><b></b></h6>
+                                 </th>
                               </tr>
                            </thead>
                            <tbody>
-                            
+                                <cfset local.contacts = EntityLoad("ORM_Create_Contact")>
+                                <cfloop array="#local.contacts#" index="contact">
+                                    <cfset local.contactId = contact.getcontactId()>
+                                    <cfif session.userID EQ contact.getuserId()>
+                                        <tr>
+                                            <td><img src="./assets/#contact.getprofilePic()#" class="profilePhoto" alt="profile"></td>
+                                            <td>#contact.getfirstName()# #contact.getlarstName()#</td>
+                                            <td>#contact.getemailID()#</td>
+                                            <td>#contact.getphoneNumber()#</td>
+                                            <td><button type="submit" class="btn btn-primary edit"  data-id="#local.contactId#">Edit</button></td>
+                                            <td><button type="submit" class="btn btn-primary delete"  data-id="#local.contactId#">Delete</button></td>
+                                            <td><button type="submit" class="btn btn-primary view"  data-id="#local.contactId#">View</button></td>
+
+                                        </tr>
+                                    <cfelse>
+                                        <cfcontinue>
+                                    </cfif>
+                                </cfloop>     
                             </tbody>
                         </table>
                     </div>

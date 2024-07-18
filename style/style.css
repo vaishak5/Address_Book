@@ -269,6 +269,10 @@ h1{
 .fullBody{
     background-color: #aac4dd;
 }
+.profilePhoto{
+    width: 35px;
+    border-radius: 50%;
+}
 
 
 

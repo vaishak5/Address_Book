@@ -84,7 +84,7 @@
             <cfreturn "false">
         <cfelse>
             <cfquery name="datasInserting" datasource="DESKTOP-8VHOQ47">
-                INSERT INTO contactDetails (title, firstName, larstName, gender, dob, profilePic, addressField, street, phoneNumber, emailID, pincode)
+                INSERT INTO contactDetails (title, firstName, larstName, gender, dob, profilePic, addressField, street, phoneNumber, emailID, pincode,userId)
                 VALUES (
                         <cfqueryparam value="#arguments.title#" cfsqltype="CF_SQL_VARCHAR">,
                         <cfqueryparam value="#arguments.firstName#" cfsqltype="CF_SQL_VARCHAR">,
@@ -96,12 +96,54 @@
                         <cfqueryparam value="#arguments.street#" cfsqltype="CF_SQL_VARCHAR">,
                         <cfqueryparam value="#arguments.phoneNumber#" cfsqltype="CF_SQL_VARCHAR">,
                         <cfqueryparam value="#arguments.email#" cfsqltype="CF_SQL_VARCHAR">,
-                        <cfqueryparam value="#arguments.pincode#" cfsqltype="CF_SQL_VARCHAR">
+                        <cfqueryparam value="#arguments.pincode#" cfsqltype="CF_SQL_VARCHAR">,
+                        <cfqueryparam value="#session.userId#" cfsqltype="CF_SQL_VARCHAR">
                 )
             </cfquery>
             <cfreturn "true">
         </cfif>
     </cffunction>
+
+    <!---Deleting Particular Row--->
+    <cffunction name="deleteDatas" access="remote" returnFormat="plain">
+        <cfargument name="contactId" required="true">
+        <cfquery name="deleteQuery" datasource="DESKTOP-8VHOQ47">
+            SELECT contactId FROM contactDetails 
+            WHERE contactId = <cfqueryparam value="#arguments.contactId#" cfsqltype="CF_SQL_VARCHAR">
+        </cfquery>
+        <cfif deleteQuery.recordCount>
+            <cfquery name="deleteItems" datasource="DESKTOP-8VHOQ47">
+                delete from contactDetails
+                WHERE contactId = <cfqueryparam value="#arguments.contactId#" cfsqltype="CF_SQL_VARCHAR">
+            </cfquery>
+            <cfreturn true>
+        <cfelse>
+            <cfreturn false>
+        </cfif>
+    </cffunction>
+
+    <!---Viewing Particular Row--->
+    <cffunction name="viewDatas" access="remote" returnformat="plain">
+    <cfargument name="contactId" type="numeric" required="true">
+    <cfquery name="contactSet" datasource="DESKTOP-8VHOQ47">
+        SELECT *
+        FROM contactDetails
+        WHERE contactId = <cfqueryparam value="#arguments.contactId#" cfsqltype="cf_sql_integer">
+    </cfquery>
+    <cfset local.contact = {}>
+    <cfif contactSet.recordCount GT 0>
+        <cfset local.contact.fullName = contactSet.title & " " & contactSet.firstName & " " & contactSet.larstName>
+        <cfset local.contact.gender = contactSet.gender>
+        <cfset local.contact.dob = contactSet.dob>
+        <cfset local.contact.fullAddress = contactSet.addressField & ","&contactSet.street>
+        <cfset local.contact.phoneNumber=contactSet.phoneNumber>
+        <cfset local.contact.email=contactSet.emailID>
+        <cfset local.contact.pincode=contactSet.pincode>
+    </cfif>
+    <cfset serializedContact = serializeJSON(local.contact)>
+    <cfreturn serializedContact>
+</cffunction>
+
 
 
 </cfcomponent>
