@@ -156,14 +156,16 @@ $(document).ready(function(){
                 contactId: contactId
             },
             success: function(response) {
-                
-                console.log(response); 
-                
-                alert("Success! Data received. Check console for details.");
-                
-                $("#firstName").val(response.firstName); 
-                $("#lastName").val(response.lastName);
-                
+                var viewDetails = JSON.parse(response); 
+                console.log(viewDetails);
+                $("#fullName").html(viewDetails.FULLNAME);
+                $("#genders").html(viewDetails.GENDER);
+                $("#dobSecond").html(viewDetails.DOB);
+                $("#addressSecond").html(viewDetails.FULLADDRESS);
+                $("#phoneNumberSecond").html(viewDetails.PHONENUMBER);
+                $("#emailid").html(viewDetails.EMAIL);
+                $("#pincodeSecond").html(viewDetails.PINCODE);
+                $("#myImage").attr( "src" , "./assets/"+viewDetails.PROFILEPIC);
             },
             error: function(xhr, status, error) {
                 console.error("AJAX Error:", status, error); 
@@ -171,12 +173,31 @@ $(document).ready(function(){
             }
         });
     });
+
+    /*Edit*/
+    $(".editBtn").click( function () {
+        var contactId = $(this).attr("data-id");
+        $.ajax({
+            type: "POST",
+            url: './component/addressBook.cfc?method=editDatas',
+           dataType: "text",
+           data: { contactId: contactId },
+           success: function(response) {
+            var editedRow = $("#" + contactId);
+            editedRow.find(".title").text(response.title);
+            editedRow.find(".firstName").text(response.firstName);
+            editedRow.find(".lastName").text(response.lastName);
+               
+    
+            },
+            error: function(xhr, status, error) {
+             console.error(error);
+                alert("Error deleting record.");
+           }
+        });
+    });
     
 });
-
-
-
-
 
 /*SIGN UP*/
 

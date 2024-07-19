@@ -122,7 +122,7 @@
         </cfif>
     </cffunction>
 
-    <!---Viewing Particular Row--->
+    <!---Viewing Particular Row(View Datas)--->
     <cffunction name="viewDatas" access="remote" returnformat="plain">
     <cfargument name="contactId" type="numeric" required="true">
     <cfquery name="contactSet" datasource="DESKTOP-8VHOQ47">
@@ -139,11 +139,28 @@
         <cfset local.contact.phoneNumber=contactSet.phoneNumber>
         <cfset local.contact.email=contactSet.emailID>
         <cfset local.contact.pincode=contactSet.pincode>
+        <cfset local.contact.profilePic=contactSet.profilePic>
     </cfif>
     <cfset serializedContact = serializeJSON(local.contact)>
     <cfreturn serializedContact>
 </cffunction>
 
-
+<!---Edit Datas--->
+    <cffunction name="editDatas" access="remote" returnFormat="plain">
+        <cfargument name="contactId" type="numeric" required="true">
+        <cfquery name="datasEdit" datasource="DESKTOP-8VHOQ47">
+            SELECT *
+            FROM contactDetails
+            WHERE contactId = <cfqueryparam value="#arguments.contactId#" cfsqltype="cf_sql_integer">
+        </cfquery>
+        <cfset local.result = {}>
+        <cfif datasEdit.recordCount>
+            <cfset local.result.title = datasEdit.title>
+            <cfset local.result.firstName = datasEdit.firstName>
+            <cfset local.result.lastName = datasEdit.larstName>
+        </cfif>
+        <cfset editSet = serializeJSON(local.result)>
+        <cfreturn editSet>
+    </cffunction>
 
 </cfcomponent>

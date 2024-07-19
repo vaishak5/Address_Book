@@ -199,7 +199,7 @@ h1{
 }
 .mainSet{
     background-color: #d8e4f0;
-    height:91vh;
+    /*height:91vh;*/
 }
 .bodyConts{
     display: flex;
@@ -273,6 +273,28 @@ h1{
     width: 35px;
     border-radius: 50%;
 }
+#closeBtn{
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+.displayItems{
+    color: #338fc5;
+    font-weight: 500;
+    font-size: 16px;
+}
+.imgSetContss{
+    background-color: #aac4dd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#myImage{
+    width: 100px;
+    border-radius: 50%;
+}
+
+
 
 
 

@@ -73,9 +73,9 @@
                                                                     <label for="title" class="title col-3">Title*</label>
                                                                     <select name="title" id="titles" required>
                                                                         <option value selected="selected"></option>
-                                                                        <option value="mr">Mr.</option>
-                                                                        <option value="mrs">Mrs.</option>
-                                                                        <option value="ms">Ms.</option>
+                                                                        <option value="mr">MR.</option>
+                                                                        <option value="mrs">MRS.</option>
+                                                                        <option value="ms">MS.</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="firstName d-flex flex-column">
@@ -94,8 +94,8 @@
                                                                     <label for="gender" class="title col-3">Gender*</label>
                                                                     <select name="gender" id="gender" required>
                                                                         <option value selected="selected"></option>
-                                                                        <option value="male">Male</option>
-                                                                        <option value="female">Female</option>
+                                                                        <option value="male">MALE</option>
+                                                                        <option value="female">FEMALE</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="dateSet d-flex flex-column">
@@ -206,9 +206,73 @@
                                             <td>#contact.getfirstName()# #contact.getlarstName()#</td>
                                             <td>#contact.getemailID()#</td>
                                             <td>#contact.getphoneNumber()#</td>
-                                            <td><button type="submit" class="btn btn-primary edit"  data-id="#local.contactId#">Edit</button></td>
+                                            <td><button type="submit" class="btn btn-primary editBtn"  data-bs-toggle="modal" data-bs-target="##exampleModal" data-id="#local.contactId#">Edit</button></td>
                                             <td><button type="submit" class="btn btn-primary delete"  data-id="#local.contactId#">Delete</button></td>
-                                            <td><button type="submit" class="btn btn-primary view"  data-id="#local.contactId#">View</button></td>
+                                            <td><button type="button" class="btn btn-primary view" data-bs-toggle="modal" data-bs-target="##exampleModal2"  data-id="#local.contactId#">View</button></td>
+               
+
+                                            <!-- Modal -->
+                                            <div class="modal bd-example-modal-lg fade" id="exampleModal2" tabindex="-1"  aria-hidden="true">
+                                                <div class="modal-dialog modal-lg p-1">
+                                                <div class="wholeSection d-flex">
+                                                    <div class="modalContent bg-white col-9">
+                                                        <div class="heading d-flex justify-content-center col-9">
+                                                            <h3 class="creating px-4">CONTACT DETAILS</h3>
+                                                        </div>
+                                                        <div class="displayItems d-flex align-items-baseline px-5 py-3">
+                                                            <div class="displayDetails d-flex flex-column col-12">
+                                                                <div class="nameSet d-flex">
+                                                                    <p class="set col-3">Name:</p>
+                                                                    <p class="name" id="fullName"></p>
+                                                                </div>
+                                                                <div class="genderSet d-flex">
+                                                                    <p class="set col-3">Gender:</p>
+                                                                    <p class="gender" id="genders"></p>
+                                                                </div>
+                                                                <div class="dobSet d-flex">
+                                                                    <p class="set col-3">Date of Birth:</p>
+                                                                    <p class="date" id="dobSecond"></p>
+                                                                </div>
+                                                                <div class="addressSet d-flex">
+                                                                    <p class="set col-3">Full Address:</p>
+                                                                    <p class="address" id="addressSecond"></p>
+                                                                </div>
+                                                                <div class="phoneSet d-flex">
+                                                                    <p class="set col-3">Phone Number:</p>
+                                                                    <p class="phone" id="phoneNumberSecond"></p>
+                                                                </div>
+                                                                <div class="emailSet d-flex">
+                                                                    <p class="set col-3">Email:</p>
+                                                                    <p class="email" id="emailid"></p>
+                                                                </div>
+                                                                <div class="pincodeSet d-flex">
+                                                                    <p class="set col-3">Pincode:</p>
+                                                                    <p class="pin" id="pincodeSecond"></p>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="footerSet py-3 d-flex justify-content-center">
+                                                            <button type="button" class="btn btn-primary" id="closeBtn"  data-bs-dismiss="modal" aria-bs-label="Close" onclick="myFunction()">Close</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="imgSetContss col-3">
+                                                        <div class="placeImg">
+                                                            <img id="myImage" src="" alt="image">
+                                                        </div>
+                                                    </div>
+                                                </div>   
+                                                </div>
+                                            </div>
+                                            
+
+
+
+
+
+
+
+
 
                                         </tr>
                                     <cfelse>
