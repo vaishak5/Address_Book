@@ -173,7 +173,7 @@
                         <table class="table table-hover">
                            <thead class="col-12">
                               <tr class="col-12">
-                                 <th class="titleValues" scope="col-3">
+                                 <th class="titleValues"  scope="col-3">
                                     <h6><b></b></h6>
                                  </th> 
                                  <th class="titleValues" scope="col-3">
