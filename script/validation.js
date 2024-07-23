@@ -168,34 +168,46 @@ $(document).ready(function(){
                 $("#myImage").attr( "src" , "./assets/"+viewDetails.PROFILEPIC);
             },
             error: function(xhr, status, error) {
-                console.error("AJAX Error:", status, error); 
+                console.error("Error:", status, error); 
                 alert("Failed to retrieve data."); 
             }
         });
     });
 
-    /*Edit*/
-    $(".editBtn").click( function () {
-        var contactId = $(this).attr("data-id");
+    $(".editBtn").click(function() {
+        var contactid=$(this).attr("contactid");
         $.ajax({
             type: "POST",
-            url: './component/addressBook.cfc?method=editDatas',
-           dataType: "text",
-           data: { contactId: contactId },
-           success: function(response) {
-            var editedRow = $("#" + contactId);
-            editedRow.find(".title").text(response.title);
-            editedRow.find(".firstName").text(response.firstName);
-            editedRow.find(".lastName").text(response.lastName);
-               
-    
+            url: "./component/addressBook.cfc?method=selectDatas",
+            dataType: "text", 
+            data: {
+                contactId: contactid
+            },
+            success: function(response) {
+                var selectDetails = JSON.parse(response); 
+                console.log(selectDetails);
+                $("#editTitle").val(selectDetails.title);
+                $("#editFirstName").val(selectDetails.firstName);
+                $("#editLastName").val(selectDetails.lastName);
+                $("#editGender").val(selectDetails.gender);
+                $("#editDob").val(selectDetails.dob);
+                $("#editAddress").val(selectDetails.address);
+                $("#editStreet").val(selectDetails.street);
+                $("#editPhoneNumber").val(selectDetails.phoneNumber);
+                $("#editEmail").val(selectDetails.email);
+                $("#editPincode").val(selectDetails.pincode); 
+                $("#editMyFile").attr( "src" , "./assets/"+selectDetails.myFile);
+
             },
             error: function(xhr, status, error) {
-             console.error(error);
-                alert("Error deleting record.");
-           }
-        });
+                console.error("Error:", status, error); 
+                alert("Failed to retrieve data."); 
+            }
     });
+});
+
+
+    
     
 });
 

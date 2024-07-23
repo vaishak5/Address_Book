@@ -199,7 +199,7 @@ h1{
 }
 .mainSet{
     background-color: #d8e4f0;
-    /*height:91vh;*/
+    height:91vh;
 }
 .bodyConts{
     display: flex;
@@ -292,6 +292,10 @@ h1{
 #myImage{
     width: 100px;
     border-radius: 50%;
+}
+.mainSett{
+    background-color: #d8e4f0;
+    height:92vh;
 }
 
 

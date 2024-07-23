@@ -146,21 +146,36 @@
 </cffunction>
 
 <!---Edit Datas--->
-    <cffunction name="editDatas" access="remote" returnFormat="plain">
-        <cfargument name="contactId" type="numeric" required="true">
-        <cfquery name="datasEdit" datasource="DESKTOP-8VHOQ47">
-            SELECT *
-            FROM contactDetails
-            WHERE contactId = <cfqueryparam value="#arguments.contactId#" cfsqltype="cf_sql_integer">
-        </cfquery>
-        <cfset local.result = {}>
-        <cfif datasEdit.recordCount>
-            <cfset local.result.title = datasEdit.title>
-            <cfset local.result.firstName = datasEdit.firstName>
-            <cfset local.result.lastName = datasEdit.larstName>
-        </cfif>
-        <cfset editSet = serializeJSON(local.result)>
-        <cfreturn editSet>
-    </cffunction>
+    <cffunction name="selectDatas" access="remote" returnformat="PLAIN">
+    <cfargument name="contactId" required="true">
+        <cfquery name="selectInputs" datasource="DESKTOP-8VHOQ47">
+        SELECT *
+        FROM contactDetails 
+        WHERE contactId = <cfqueryparam value="#arguments.contactId#" cfsqltype="cf_sql_integer">
+    </cfquery>
+    <cfset  local.result = {}>
+    <cfset parsedDate = ParseDateTime(selectInputs.dob)>
+    <cfset formattedDate = DateFormat(parsedDate, "dd-mm-yyyy")>
+    <cfif selectInputs.recordCount>
+        <cfset local.result['contactId'] = selectInputs.contactId>
+        <cfset local.result['title'] = selectInputs.title>
+        <cfset local.result['firstName'] = selectInputs.firstName>
+        <cfset local.result['lastName'] = selectInputs.larstName> 
+        <cfset local.result['gender'] = selectInputs.gender>
+        <cfset local.result["dob"] = formattedDate>
+        <cfset local.result['address'] = selectInputs.addressField>
+        <cfset local.result['street']= selectInputs.street>
+        <cfset local.result['phoneNumber']= selectInputs.phoneNumber>
+        <cfset local.result['email']=selectInputs.emailID>
+        <cfset local.result['pincode']=selectInputs.pincode>
+        <cfset local.result['myFile'] = selectInputs.profilePic>
+        
+
+    </cfif>
+     <cfset serializedContact = serializeJSON(local.result)>
+    <cfreturn serializedContact>
+
+</cffunction>
+
 
 </cfcomponent>

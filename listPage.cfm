@@ -19,6 +19,19 @@
 </head>
 <body>
 <cfif session.login>
+    <cfset local.obj=createObject("component", "component.addressBook")>
+    <cfparam name="URL.contactId" default="false">
+    <cfif structKeyExists(form, "editTitle") and structKeyExists(form, "editFirstName") and structKeyExists(form, "editLastName") and structKeyExists(form, "editGender")
+        and structKeyExists(form, "editDob") and structKeyExists(form, "editMyFile") and structKeyExists(form, "editAddress")>
+        
+            <cfset local.editDatas = local.obj.getEditDatas(URL.contactId, form.editTitle, form.editFirstName, form.editLastName, form.editGender, form.editDob, form.editMyFile, form.editAddress)>
+            <cfdump  var="#local.editDatas#" abort>
+    <cfelse>
+        
+    </cfif>
+
+
+
     <div class="navbar px-5">
         <div class="navbarFt">
             <img class="addressLogo" src="./assets/bodyBook.png" alt="img" width="30" height="30">
@@ -29,7 +42,7 @@
             <a href="./component/addressBook.cfc?method=doLogout">Logout</a>
         </div>
     </div>
-    <div class="mainSet">
+    <div class="mainSett">
         <div class="body">
             <div class="bodyFt">
                 <div class="downloadSet">
@@ -80,7 +93,7 @@
                                                                 </div>
                                                                 <div class="firstName d-flex flex-column">
                                                                     <label for="fname" class="fname col-6">First Name*</label>
-                                                                    <input type="text" name="fname" placeholder="Your First Name" id="firstName" required>
+                                                                    <input type="text" name="fname" placeholder="Your First Name" id="firstName"  required>
                                                                 </div>
                                                                 <div class="lastName d-flex flex-column">
                                                                     <label for="lname" class="lname col-6">Last Name*</label>
@@ -119,12 +132,12 @@
                                                             <!---Fourth Input--->
                                                             <div class="inputSet d-flex gap-5 py-2">
                                                                 <div class="firstName d-flex flex-column col-5">
-                                                                    <label for="fname" class="fname col-4">Address*</label>
-                                                                    <input type="text" name="fname" id="address" required>
+                                                                    <label for="address" class="fname col-4">Address*</label>
+                                                                    <input type="text" name="address" id="address" required>
                                                                 </div>
                                                                 <div class="lastName d-flex flex-column col-5">
-                                                                    <label for="lname" class="lname col-3">Street*</label>
-                                                                    <input type="text" name="lname" id="street" required>
+                                                                    <label for="street" class="lname col-3">Street*</label>
+                                                                    <input type="text" name="street" id="street" required>
                                                                 </div>
                                                             </div>
                                                             <!---Fifth Input--->
@@ -206,7 +219,128 @@
                                             <td>#contact.getfirstName()# #contact.getlarstName()#</td>
                                             <td>#contact.getemailID()#</td>
                                             <td>#contact.getphoneNumber()#</td>
-                                            <td><button type="submit" class="btn btn-primary editBtn"  data-bs-toggle="modal" data-bs-target="##exampleModal" data-id="#local.contactId#">Edit</button></td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary editBtn" data-bs-toggle="modal" data-bs-target="##exampleModal3" contactid="#contact.getcontactId()#">
+                                                    Edit
+                                                </button>
+                                            </td>
+                                            
+                                            <!---Edit Modal--->
+                                            <div class="modal bd-example-modal-lg fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg p-1">
+                                                    <div class="modal-content">
+                                                        <div class="fullBody d-flex">
+                                                            <div class="firstBody">
+                                                                <div class="modalContent bg-white px-5">
+                                                                    <div class="headings">
+                                                                        <div class="heading d-flex justify-content-center w-100">
+                                                                            <h3 class="creating px-4 w-100 d-flex justify-content-center">CREATE CONTACT</h3>
+                                                                        </div>
+                                                                        <div class="nextHeading mt-3 w-100 d-flex justify-content-center">
+                                                                            <h5 class="personal w-100 d-flex py-1">Personal Contact</h5>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="inputFields">
+                                                                        <form class="formField" method="post" action="" id="myForm">
+                                                                            <!---First Input--->
+                                                                            <div class="inputSet d-flex gap-5 py-2">
+                                                                                <div class="titleSet d-flex flex-column">
+                                                                                    <label for="editTitle" class="title col-3">Title*</label>
+                                                                                    <select name="editTitle" id="editTitle" required>
+                                                                                        <option value selected="selected"></option>
+                                                                                        <option value="mr">MR.</option>
+                                                                                        <option value="mrs">MRS.</option>
+                                                                                        <option value="ms">MS.</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="firstName d-flex flex-column">
+                                                                                    <label for="fname" class="fname col-6">First Name*</label>
+                                                                                    <input type="text" name="editFirstName" placeholder="Your First Name" id="editFirstName" required>
+                                                                                </div>
+                                                                                <div class="lastName d-flex flex-column">
+                                                                                    <label for="editLastName" class="lname col-6">Last Name*</label>
+                                                                                    <input type="text" name="editLastName" placeholder="Your Last Name" id="editLastName" required>
+                                                                                </div>
+                                                                
+                                                                            </div>
+                                                                            <!---Second Input--->
+                                                                            <div class="inputSetSecond d-flex gap-5 py-3">
+                                                                                <div class="titleSet d-flex flex-column">
+                                                                                    <label for="editGender" class="title col-3">Gender*</label>
+                                                                                    <select name="editGender" id="editGender" required>
+                                                                                        <option value selected="selected"></option>
+                                                                                        <option value="male">MALE</option>
+                                                                                        <option value="female">FEMALE</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="dateSet d-flex flex-column">
+                                                                                    <label for="editDob" class="dob col-10">Date Of Birth*:</label>
+                                                                                    <input type="date" id="dob" name="editDob" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!---Third Input--->
+                                                                            <div class="inputThird d-flex">
+                                                                                <div class="upload d-flex flex-column col-8">
+                                                                                    <label for="editMyFile" class="file col-4">Upload Photo*</label>
+                                                                                    <input type="file" id="editMyFile" name="editMyFile" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!---Heading2--->
+                                                                            <div class="details">
+                                                                                <div class="nextHeading mt-3 w-100 d-flex justify-content-center">
+                                                                                    <h5 class="personal w-100 d-flex py-1">Contact Details</h5>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!---Fourth Input--->
+                                                                            <div class="inputSet d-flex gap-5 py-2">
+                                                                                <div class="firstName d-flex flex-column col-5">
+                                                                                    <label for="editAddress" class="fname col-4">Address*</label>
+                                                                                    <input type="text" name="editAddress" id="editAddress" required>
+                                                                                </div>
+                                                                                <div class="lastName d-flex flex-column col-5">
+                                                                                    <label for="editStreet" class="lname col-3">Street*</label>
+                                                                                    <input type="text" name="editStreet" id="editStreet" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!---Fifth Input--->
+                                                                            <div class="inputSet d-flex gap-5 py-2">
+                                                                                <div class="firstName d-flex flex-column col-5">
+                                                                                    <label for="editPhoneNumber"  class="fname col-7">Phone Number*</label>
+                                                                                    <input type="text" name="editPhoneNumber" maxlength="10" id="editPhoneNumber" required>
+                                                                                </div>
+                                                                                <div class="lastName d-flex flex-column col-5">
+                                                                                    <label for="editEmail" class="lname col-3">Email*</label>
+                                                                                    <input type="email" name="editEmail" id="editEmail" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!---Sixth Input--->
+                                                                            <div class="inputSet d-flex gap-5 py-2">
+                                                                                <div class="firstName d-flex flex-column col-5">
+                                                                                    <label for="editPincode"  class="fname col-4">Pincode*</label>
+                                                                                    <input type="text" name="editPincode" maxlength="6" id="editPincode" required>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <span id="errorMsg" class="errorTxt"></span>
+                                                                    <!---Close--->
+                                                                    <div class="footer col-8 py-3 gap-3">
+                                                                        <button type="button" class="btn btn-primary" id="dataCreating">Submit</button>
+                                                                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-bs-label="Close" onclick="myFunction()">Close</button>
+                                                                    </div>
+                                                                    <!---Close--->
+                                                                </div>
+                                                            </div>
+                                                            <div class="secondMain col-4">
+                                                                <div class="dummyImg">
+                                                                    <img src="./assets/profilePic.png" alt="image" width="200">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <td><button type="submit" class="btn btn-primary delete"  data-id="#local.contactId#">Delete</button></td>
                                             <td><button type="button" class="btn btn-primary view" data-bs-toggle="modal" data-bs-target="##exampleModal2"  data-id="#local.contactId#">View</button></td>
                
@@ -264,16 +398,6 @@
                                                 </div>   
                                                 </div>
                                             </div>
-                                            
-
-
-
-
-
-
-
-
-
                                         </tr>
                                     <cfelse>
                                         <cfcontinue>
