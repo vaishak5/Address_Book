@@ -297,6 +297,11 @@ h1{
     background-color: #d8e4f0;
     height:92vh;
 }
+.editImg{
+    border-radius: 50%;
+    width: 120px;
+    height: 123px;
+}
 
 
 

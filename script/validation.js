@@ -174,6 +174,8 @@ $(document).ready(function(){
         });
     });
 
+    /*Select datas in the row(all input fields)*/
+
     $(".editBtn").click(function() {
         var contactid=$(this).attr("contactid");
         $.ajax({
@@ -185,24 +187,44 @@ $(document).ready(function(){
             },
             success: function(response) {
                 var selectDetails = JSON.parse(response); 
-                console.log(selectDetails);
+                var date = new Date(selectDetails.dob);
+                var dateSet = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+                console.log(date);
+                console.log(dateSet);
+                console.log(selectDetails.myFile);
+                console.log(selectDetails); 
                 $("#editTitle").val(selectDetails.title);
                 $("#editFirstName").val(selectDetails.firstName);
                 $("#editLastName").val(selectDetails.lastName);
                 $("#editGender").val(selectDetails.gender);
-                $("#editDob").val(selectDetails.dob);
+                $("#editDob").prop("value", dateSet);
                 $("#editAddress").val(selectDetails.address);
                 $("#editStreet").val(selectDetails.street);
                 $("#editPhoneNumber").val(selectDetails.phoneNumber);
                 $("#editEmail").val(selectDetails.email);
                 $("#editPincode").val(selectDetails.pincode); 
-                $("#editMyFile").attr( "src" , "./assets/"+selectDetails.myFile);
-
+                $("#editingMyFile").attr( "src" , "./assets/"+selectDetails.myFile);
             },
             error: function(xhr, status, error) {
                 console.error("Error:", status, error); 
                 alert("Failed to retrieve data."); 
             }
+    });
+
+    /*Updating new datas to the field*/
+
+    $(".updateNewDatas").click(function(){
+        var contactid=$(this).attr("contactid");
+        console.log(contactid);
+        $.ajax({
+            type: "POST",
+            url: "./component/addressBook.cfc?method=updatingDatas",
+            dataType: "text", 
+            data: {
+                contactId: contactid
+            },
+
+        });
     });
 });
 
