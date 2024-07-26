@@ -174,32 +174,32 @@
 </cffunction>
 
 <!---Update Datas(Edited)--->
-<cffunction  name="updatingDatas" access="remote" returnFormat="plain">
+<cffunction  name="updatingDatas" access="remote" returnFormat="json">
     <cfargument name="contactId" required="true">
-    
-        <cfquery name="selectInputs" datasource="DESKTOP-8VHOQ47">
+    <cfargument  name="firstName" required="true">
+    <cfargument  name="lastName" required="true">
+    <cfargument  name="gender" required="true">
+    <cfargument  name="dob" required="true">
+    <cfargument  name="address" required="true">
+    <cfargument  name="street" required="true">
+    <cfargument  name="phoneNumber" required="true">
+    <cfargument  name="email" required="true">
+    <cfargument  name="pincode" required="true">
+    <!--- <cfargument name="updatePic" required="true"> --->
+    <cfquery name="selectInputs" datasource="DESKTOP-8VHOQ47" result ="editDatassResult">
        UPDATE contactDetails 
-       
+       SET firstName=<cfqueryparam value="#arguments.firstName#" cfsqltype="cf_sql_varchar">,
+        larstName=<cfqueryparam value="#arguments.lastName#" cfsqltype="cf_sql_varchar">,
+        gender=<cfqueryparam value="#arguments.gender#" cfsqltype="cf_sql_varchar">,
+        dob=<cfqueryparam value="#arguments.dob#" cfsqltype="cf_sql_varchar">,
+        addressField=<cfqueryparam value="#arguments.address#" cfsqltype="cf_sql_varchar">,
+        street=<cfqueryparam value="#arguments.street#" cfsqltype="cf_sql_varchar">,
+        phoneNumber=<cfqueryparam value="#arguments.phoneNumber#" cfsqltype="cf_sql_varchar">,
+        emailID=<cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">,
+        pincode=<cfqueryparam value="#arguments.pincode#" cfsqltype="cf_sql_varchar">
+        
         WHERE contactId = <cfqueryparam value="#arguments.contactId#" cfsqltype="cf_sql_integer">
     </cfquery>
-    <cfset  local.result = {}>
-    <cfif selectInputs.recordCount>
-        <cfset local.result['contactId'] = selectInputs.contactId>
-        <cfset local.result['title'] = selectInputs.title>
-        <cfset local.result['firstName'] = selectInputs.firstName>
-        <cfset local.result['lastName'] = selectInputs.larstName> 
-        <cfset local.result['gender'] = selectInputs.gender>
-        <cfset local.result["dob"] = selectInputs.dob>
-        <cfset local.result['address'] = selectInputs.addressField>
-        <cfset local.result['street']= selectInputs.street>
-        <cfset local.result['phoneNumber']= selectInputs.phoneNumber>
-        <cfset local.result['email']=selectInputs.emailID>
-        <cfset local.result['pincode']=selectInputs.pincode>
-        <cfset local.result['myFile'] = selectInputs.profilePic>
-    </cfif>
-     <cfset serializedContact = serializeJSON(local.result)>
-    <cfreturn serializedContact> 
-</cffunction>
-
-
+        <cfreturn true>
+</cffunction> 
 </cfcomponent>

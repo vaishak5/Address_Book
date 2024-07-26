@@ -200,11 +200,11 @@
                               <cfloop array="#local.contacts#" index="contact">
                                  <cfset local.contactId = contact.getcontactId()>
                                  <cfif session.userID EQ contact.getuserId()>
-                                    <tr>
+                                    <tr id="#local.contactId#">
                                        <td><img src="./assets/#contact.getprofilePic()#" class="profilePhoto" alt="profile"></td>
-                                       <td>#contact.getfirstName()# #contact.getlarstName()#</td>
-                                       <td>#contact.getemailID()#</td>
-                                       <td>#contact.getphoneNumber()#</td>
+                                       <td class="nameList">#contact.getfirstName()# #contact.getlarstName()#</td>
+                                       <td class="emailList">#contact.getemailID()#</td>
+                                       <td class="phoneList">#contact.getphoneNumber()#</td>
                                        <td>
                                           <button type="submit" class="btn btn-primary editBtn" data-bs-toggle="modal" data-bs-target="##exampleModal3" contactid="#contact.getcontactId()#">
                                           Edit
