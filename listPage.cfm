@@ -47,7 +47,7 @@
                         </div>
                         <div class="userName p-2 ">#session.fullName#</div>
                         <div class="p-2 ">
-                           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="##exampleModal" >
+                           <button type="button" id="createContactButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="##exampleModal" >
                            Create Contact
                            </button>
                            <!-- Modal -->
@@ -70,6 +70,7 @@
                                                    <!---First Input--->
                                                    <div class="inputSet d-flex gap-5 py-2">
                                                       <div class="titleSet d-flex flex-column">
+                                                      <input type="hidden" id="hiddenContactId" value="0">
                                                          <label for="title" class="title col-3">Title*</label>
                                                          <select name="title" id="titles" required>
                                                             <option value selected="selected"></option>
@@ -105,8 +106,8 @@
                                                    <!---Third Input--->
                                                    <div class="inputThird d-flex">
                                                       <div class="upload d-flex flex-column col-8">
-                                                         <label for="myfile" class="file col-4">Upload Photo*</label>
-                                                         <input type="file" id="profile" name="myfile" required>
+                                                         <label for="profile" class="file col-4">Upload Photo*</label>
+                                                         <input type="file" id="profile" name="profile" required>
                                                       </div>
                                                    </div>
                                                    <!---Heading2--->
@@ -150,14 +151,14 @@
                                              <!---Close--->
                                              <div class="footer col-8 py-3 gap-3">
                                                 <button type="button" class="btn btn-primary" id="dataCreating">Submit</button>
-                                                <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-bs-label="Close" onclick="myFunction()">Close</button>
+                                                <button type="button" class="btn btn-secondary close" id="formClose" data-bs-dismiss="modal" aria-bs-label="Close" onclick="myFunction()">Close</button>
                                              </div>
                                              <!---Close--->
                                           </div>
                                        </div>
                                        <div class="secondMain col-4">
                                           <div class="dummyImg">
-                                             <img src="./assets/profilePic.png" alt="image" width="200">
+                                             <img id="listImage" src="./assets/bodyBook.png" alt="image" class="editImg">
                                           </div>
                                        </div>
                                     </div>
@@ -196,138 +197,24 @@
                               </tr>
                            </thead>
                            <tbody>
-                              <cfset local.contacts = EntityLoad("ORM_Create_Contact")>
-                              <cfloop array="#local.contacts#" index="contact">
-                                 <cfset local.contactId = contact.getcontactId()>
+                              <cfset variables.contacts = EntityLoad("ORM_Create_Contact")>
+                              <cfloop array="#variables.contacts#" index="contact">
+                                 <cfset variables.contactId = contact.getcontactId()>
                                  <cfif session.userID EQ contact.getuserId()>
-                                    <tr id="#local.contactId#">
+                                    <tr class="#variables.contactId#">
                                        <td><img src="./assets/#contact.getprofilePic()#" class="profilePhoto" alt="profile"></td>
                                        <td class="nameList">#contact.getfirstName()# #contact.getlarstName()#</td>
                                        <td class="emailList">#contact.getemailID()#</td>
                                        <td class="phoneList">#contact.getphoneNumber()#</td>
                                        <td>
-                                          <button type="submit" class="btn btn-primary editBtn" data-bs-toggle="modal" data-bs-target="##exampleModal3" contactid="#contact.getcontactId()#">
+                                          <button type="submit" class="btn btn-primary editBtn" data-bs-toggle="modal" data-bs-target="##exampleModal" data-id="#variables.contactId#">
                                           Edit
                                           </button>
                                        </td>
-                                       <!---Edit Modal--->
-                                       <div class="modal bd-example-modal-lg fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                          <div class="modal-dialog modal-lg p-1">
-                                             <div class="modal-content">
-                                                <div class="fullBody d-flex">
-                                                   <div class="firstBody">
-                                                      <div class="modalContent bg-white px-5">
-                                                         <div class="headings">
-                                                            <div class="heading d-flex justify-content-center w-100">
-                                                               <h3 class="creating px-4 w-100 d-flex justify-content-center">CREATE CONTACT</h3>
-                                                            </div>
-                                                            <div class="nextHeading mt-3 w-100 d-flex justify-content-center">
-                                                               <h5 class="personal w-100 d-flex py-1">Personal Contact</h5>
-                                                            </div>
-                                                         </div>
-                                                         <div class="inputFields">
-                                                            <form class="formField" method="post" action="" id="myForm">
-                                                               <!---First Input--->
-                                                               <div class="inputSet d-flex gap-5 py-2">
-                                                                  <div class="titleSet d-flex flex-column">
-                                                                     <label for="editTitle" class="title col-3">Title*</label>
-                                                                     <select name="editTitle" id="editTitle" required>
-                                                                        <option value selected="selected"></option>
-                                                                        <option value="mr">MR.</option>
-                                                                        <option value="mrs">MRS.</option>
-                                                                        <option value="ms">MS.</option>
-                                                                     </select>
-                                                                  </div>
-                                                                  <div class="firstName d-flex flex-column">
-                                                                     <label for="fname" class="fname col-6">First Name*</label>
-                                                                     <input type="text" name="editFirstName" placeholder="Your First Name" id="editFirstName" required>
-                                                                  </div>
-                                                                  <div class="lastName d-flex flex-column">
-                                                                     <label for="editLastName" class="lname col-6">Last Name*</label>
-                                                                     <input type="text" name="editLastName" placeholder="Your Last Name" id="editLastName" required>
-                                                                  </div>
-                                                               </div>
-                                                               <!---Second Input--->
-                                                               <div class="inputSetSecond d-flex gap-5 py-3">
-                                                                  <div class="titleSet d-flex flex-column">
-                                                                     <label for="editGender" class="title col-3">Gender*</label>
-                                                                     <select name="editGender" id="editGender" required>
-                                                                        <option value selected="selected"></option>
-                                                                        <option value="male">MALE</option>
-                                                                        <option value="female">FEMALE</option>
-                                                                     </select>
-                                                                  </div>
-                                                                  <div class="dateSet d-flex flex-column">
-                                                                     <label for="editDob" class="dob col-10">Date Of Birth*:</label>
-                                                                     <input type="date" id="editDob" name="editDob" required>
-                                                                  </div>
-                                                               </div>
-                                                               <!---Third Input--->
-                                                               <div class="inputThird d-flex">
-                                                                  <div class="upload d-flex flex-column col-8">
-                                                                     <label for="editMyFile" class="file col-4">Upload Photo*</label>
-                                                                     <input type="file" id="editMyFile" name="editMyFile" required>
-                                                                  </div>
-                                                               </div>
-                                                               <!---Heading2--->
-                                                               <div class="details">
-                                                                  <div class="nextHeading mt-3 w-100 d-flex justify-content-center">
-                                                                     <h5 class="personal w-100 d-flex py-1">Contact Details</h5>
-                                                                  </div>
-                                                               </div>
-                                                               <!---Fourth Input--->
-                                                               <div class="inputSet d-flex gap-5 py-2">
-                                                                  <div class="firstName d-flex flex-column col-5">
-                                                                     <label for="editAddress" class="fname col-4">Address*</label>
-                                                                     <input type="text" name="editAddress" id="editAddress" required>
-                                                                  </div>
-                                                                  <div class="lastName d-flex flex-column col-5">
-                                                                     <label for="editStreet" class="lname col-3">Street*</label>
-                                                                     <input type="text" name="editStreet" id="editStreet" required>
-                                                                  </div>
-                                                               </div>
-                                                               <!---Fifth Input--->
-                                                               <div class="inputSet d-flex gap-5 py-2">
-                                                                  <div class="firstName d-flex flex-column col-5">
-                                                                     <label for="editPhoneNumber"  class="fname col-7">Phone Number*</label>
-                                                                     <input type="text" name="editPhoneNumber" maxlength="10" id="editPhoneNumber" required>
-                                                                  </div>
-                                                                  <div class="lastName d-flex flex-column col-5">
-                                                                     <label for="editEmail" class="lname col-3">Email*</label>
-                                                                     <input type="email" name="editEmail" id="editEmail" required>
-                                                                  </div>
-                                                               </div>
-                                                               <!---Sixth Input--->
-                                                               <div class="inputSet d-flex gap-5 py-2">
-                                                                  <div class="firstName d-flex flex-column col-5">
-                                                                     <label for="editPincode"  class="fname col-4">Pincode*</label>
-                                                                     <input type="text" name="editPincode" maxlength="6" id="editPincode" required>
-                                                                  </div>
-                                                               </div>
-                                                            </form>
-                                                         </div>
-                                                         <span id="errorMsg" class="errorTxt"></span>
-                                                         <!---Close--->
-                                                         <div class="footer col-8 py-3 gap-3">
-                                                            <button type="button" class="btn btn-primary updateNewDatas" contactid="#local.contactId#">Submit</button>
-                                                            <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-bs-label="Close" onclick="myFunction()">Close</button>
-                                                         </div>
-                                                         <!---Close--->
-                                                      </div>
-                                                   </div>
-                                                   <div class="secondMain col-4">
-                                                      <div class="dummyImg">
-                                                         <img id="editingMyFile" src="" alt="image" class="editImg">
-                                                       
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <td><button type="submit" class="btn btn-primary delete"  data-id="#local.contactId#">Delete</button></td>
-                                       <td><button type="button" class="btn btn-primary view" data-bs-toggle="modal" data-bs-target="##exampleModal2"  data-id="#local.contactId#">View</button></td>
-                                       <!-- Modal -->
+                                       
+                                       <td><button type="submit" class="btn btn-primary delete"  data-id="#variables.contactId#">Delete</button></td>
+                                       <td><button type="button" class="btn btn-primary view" data-bs-toggle="modal" data-bs-target="##exampleModal2"  data-id="#variables.contactId#">View</button></td>
+                                       <!--View Modal -->
                                        <div class="modal bd-example-modal-lg fade" id="exampleModal2" tabindex="-1"  aria-hidden="true">
                                           <div class="modal-dialog modal-lg p-1">
                                              <div class="wholeSection d-flex">
@@ -373,7 +260,7 @@
                                                 </div>
                                                 <div class="imgSetContss col-3">
                                                    <div class="placeImg">
-                                                      <img id="myImage" src="" alt="image">
+                                                      <img id="myImage" src="" alt="image" class="editImg">
                                                    </div>
                                                 </div>
                                              </div>
