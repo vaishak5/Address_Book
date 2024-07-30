@@ -33,7 +33,7 @@
                <div class="body">
                   <div class="bodyFt">
                      <div class="downloadSet">
-                        <img src="./assets/pdf.png" alt="img">
+                        <a href="listPdf.cfm"><img src="./assets/pdf.png" alt="img"></a>
                         <img src="./assets/excel.png" alt="img">
                         <img src="./assets/print.png" alt="img">
                      </div>

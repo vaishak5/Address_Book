@@ -46,7 +46,7 @@ $(document).ready(function () {
     var emailId = $("#email").val().trim();
     var password = $("#password").val().trim();
     if (emailId == "" || password == "") {
-      alert("Invalid username and Password!");
+      alert("Invalid!!");
       return;
     } else {
       $.ajax({
@@ -235,59 +235,6 @@ $(document).ready(function () {
       });
     }
   });
-  /*Updating new datas to the field*/
-  $(".updateNewDatas").click(function () {
-    var contactId = $(this).attr("data-id");
-    alert(contactId);
-    return;
-    var firstName = $("#editFirstName").val().trim();
-    var lastName = $("#editLastName").val().trim();
-    var gender = $("#editGender").val().trim();
-    var dob = $("#editDob").val().trim();
-    var address = $("#editAddress").val().trim();
-    var street = $("#editStreet").val().trim();
-    var phoneNum = $("#editPhoneNumber").val().trim();
-    var email = $("#editEmail").val().trim();
-    var pincode = $("#editPincode").val().trim();
-    alert(contactid);
-    return;
-    /* var profile = $("#profile")[0].files[0]; */
-    $.ajax({
-      type: "POST",
-      url: "./component/addressBook.cfc?method=updatingDatas",
-      dataType: "json",
-      data: {
-        contactId: contactid,
-        firstName: firstName,
-        lastName: lastName,
-        gender: gender,
-        dob: dob,
-        address: address,
-        street: street,
-        phoneNumber: phoneNum,
-        email: email,
-        pincode: pincode,
-        /* profile:profile */
-      },
-      success: function (response) {
-        if (response) {
-          var editedRow = $("#" + contactid); //select the row elements with id(contactid) attribute
-          editedRow.find(".nameList").text(firstName);
-          editedRow.find(".nameList").text(lastName);
-          editedRow.find(".emailList").text(email);
-          editedRow.find(".phoneList").text(phoneNum);
-          alert("Data edited!!");
-          window.location.href = "./listPage.cfm";
-        } else {
-          alert("Failed to edit data. Please try again.");
-        }
-      },
-      error: function (xhr, status, error) {
-        console.error(error);
-        alert("An error occurred while submitting the form. Please try again.");
-      },
-    });
-  });
 });
 
 /*SIGN UP*/
@@ -437,7 +384,7 @@ function formValidation() {
     }
     if (firstName === "" || /\d/.test(firstName) || firstName.length > 20) {
       errorMsg.push(
-        "Please enter a valid first name (up to 20 characters, no digits)."
+        "Please enter a valid first name (up to 20 characters, no digits"
       );
       isValid = false;
     }
@@ -464,7 +411,7 @@ function formValidation() {
       isValid = false;
     }
     if (street === "" || street.length > 50) {
-      errorMsg.push("Please enter a valid street (up to 50 characters).");
+      errorMsg.push("Please enter a valid street (up to 50 characters");
       isValid = false;
     }
     if (phoneNum === "" || !/^\d{10}$/.test(phoneNum)) {
