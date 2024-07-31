@@ -1,6 +1,8 @@
 <cfoutput>
     <cfif session.login>
         <cfhtmltopdf>
+            <cfheader name="Content-Disposition" value="attachment; filename=list.pdf">
+            <cfheader name="Content-Type" value="application/pdf">
             <div class="displayPdfDatas d-flex" id="pdfSet">
                 <div class="col-12">
                     <table class="tableSet">
@@ -36,8 +38,8 @@
                             <cfset contacts = EntityLoad("ORM_CREATE_CONTACT")>
                             <cfloop array="#contacts#" index="contact">
                                  <cfif session.userID EQ contact.getuserId()>
-                                    <tr class="tableRow" id="">
-                                        <td><img src="./assets/#contact.getprofilePic()#" class="profilePhoto" alt="profile"></td>
+                                    <tr class="tableRow">
+                                        <td><img src="./assets/#contact.getprofilePic()#" class="profilePhoto" alt="profile" width="20" height="20"></td>
                                         <td class="">#contact.getfirstName()# #contact.getlarstName()#</td>
                                         <td class="">#contact.getemailID()#</td>
                                         <td class="">#contact.getphoneNumber()#</td>
@@ -53,6 +55,5 @@
                 </div>
             </div>
         </cfhtmltopdf>
-       
     </cfif>
 </cfoutput>

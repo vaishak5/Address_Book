@@ -1,23 +1,23 @@
 <cfoutput>
    <!DOCTYPE html>
    <html lang="en">
-    <head>
-         <meta charset="UTF-8">
-         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <title>List Page</title>
-         <link rel="stylesheet" href="./style/style.css">
-         <link rel="stylesheet" href="./style/jquery-ui.css">
-         <link rel="stylesheet" href="./style/bootstrap.min.css">
-         <script src="./script/sourceFirst.js"></script>
-         <script src="./script/sourceSecond.js"></script>
-         <script src="./script/sourceThird.js"></script>
-         <script src="./script/jquery.min.js"></script>
-         <script src="./script/jquery-ui.min.js"></script>
-         <script src="./script/validation.js"></script>
-         <script src="./script/modalJS.js"></script>
-         <script src="./script/reset.js"></script>
-    </head>
-    <body>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>List Page</title>
+      <link rel="stylesheet" href="./style/style.css">
+      <link rel="stylesheet" href="./style/jquery-ui.css">
+      <link rel="stylesheet" href="./style/bootstrap.min.css">
+      <script src="./script/sourceFirst.js"></script>
+      <script src="./script/sourceSecond.js"></script>
+      <script src="./script/sourceThird.js"></script>
+      <script src="./script/jquery.min.js"></script>
+      <script src="./script/jquery-ui.min.js"></script>
+      <script src="./script/validation.js"></script>
+      <script src="./script/modalJS.js"></script>
+      <script src="./script/reset.js"></script>
+   </head>
+   <body>
         <cfif session.login>
             <div class="navbar px-5">
                <div class="navbarFt">
@@ -34,8 +34,8 @@
                   <div class="bodyFt">
                      <div class="downloadSet">
                         <a href="listPdf.cfm"><img src="./assets/pdf.png" alt="img"></a>
-                        <img src="./assets/excel.png" alt="img">
-                        <img src="./assets/print.png" alt="img">
+                        <a href="listExcel.cfm"><img src="./assets/excel.png" alt="img"></a>
+                        <img src="./assets/print.png" alt="img" id="printButton">
                      </div>
                   </div>
                </div>
@@ -168,9 +168,9 @@
                         </div>
                      </div>
                   </div>
-                  <div class="bodyThd">
-                     <div class="tableStyle d-flex align-items-center justify-content-center">
-                        <table class="table table-hover">
+                  <div class="bodyThd" id="printableDiv">
+                     <div class="tableStyle d-flex align-items-center justify-content-center" >
+                        <table class="table table-hover" >
                            <thead class="col-12">
                               <tr class="col-12">
                                  <th class="titleValues"  scope="col-3">
@@ -268,7 +268,7 @@
                                        </div>
                                     </tr>
                                     <cfelse>
-                                    <cfcontinue>
+                                       <cfcontinue>
                                  </cfif>
                               </cfloop>
                            </tbody>

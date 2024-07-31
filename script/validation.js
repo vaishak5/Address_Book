@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  
   /*SIGN IN*/
   $("#submitClick").click(function () {
     var fullName = $("#fullName").val().trim();
@@ -121,12 +122,9 @@ $(document).ready(function () {
         success: function (response) {
           if (response == "true") {
             window.location.href = "./listPage.cfm";
-          
-          }
-          else if (response == "true") {
+          } else if (response == "true") {
             window.location.href = "./listPage.cfm";
-          }
-           else if (response == "false") {
+          } else if (response == "false") {
             alert("Email ID already present!!");
           }
         },
@@ -203,7 +201,8 @@ $(document).ready(function () {
         },
         success: function (response) {
           console.log(response);
-          $('#profile').attr('value', "./assets/" + response.profilePic)[0].files[0];
+          $("#profile").attr("value", "./assets/" + response.profilePic)[0]
+            .files[0];
           var selectDetails = JSON.parse(response);
           var date = new Date(selectDetails.dob);
           var dateSet =
@@ -234,6 +233,14 @@ $(document).ready(function () {
         },
       });
     }
+  });
+  /*Print Details*/
+
+  $("#printButton").on("click", function () {
+    var printContent = $("#printableDiv").html();
+    $('body').html(printContent);
+    window.print();
+    window.location.href = "./listPage.cfm";
   });
 });
 
