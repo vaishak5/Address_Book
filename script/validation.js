@@ -47,7 +47,7 @@ $(document).ready(function () {
     var emailId = $("#email").val().trim();
     var password = $("#password").val().trim();
     if (emailId == "" || password == "") {
-      alert("Invalid!!");
+      alert("Please fill the field!!");
       return;
     } else {
       $.ajax({
