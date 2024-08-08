@@ -20,13 +20,13 @@
             <cfset local.hashedPassword = Hash(arguments.password, "SHA-256")>
             <cfset local.dummy = "518FFED71D49E52E0E968FF881C0B19B535E40973B13455E3F2E25336F912D41">
             <cfquery name="insertValues"  datasource="DESKTOP-8VHOQ47">
-                INSERT INTO register (fullName,  emailId, userName, password, imgFile)
+                INSERT INTO register (fullName,  emailId, password, imgFile, userName)
                 VALUES (
                     <cfqueryparam value="#arguments.fullName#" cfsqltype="CF_SQL_VARCHAR">,
                     <cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">,
-                    <cfqueryparam value="#arguments.userName#" cfsqltype="CF_SQL_VARCHAR">,
                     <cfqueryparam value="#local.hashedPassword#" cfsqltype="CF_SQL_VARCHAR">,
-                    <cfqueryparam value="#local.img#" cfsqltype="CF_SQL_VARCHAR">
+                    <cfqueryparam value="#local.img#" cfsqltype="CF_SQL_VARCHAR">,
+                    <cfqueryparam value="#arguments.userName#" cfsqltype="CF_SQL_VARCHAR">
                 )
             </cfquery>  
             <cfreturn "true">
@@ -38,7 +38,6 @@
         <cfargument name="emailId" required="true">
         <cfargument name="password" required="true">
         <cfset local.hashPassword=Hash(arguments.password,"SHA-256")>
-        
         <cfquery name="checkuserId" datasource="DESKTOP-8VHOQ47">
             SELECT userId,fullName,imgFile FROM register
             WHERE emailId=<cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">

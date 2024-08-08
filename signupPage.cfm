@@ -21,7 +21,7 @@
             <h2>ADDRESS BOOK</h2>
         </div>
         <div class="navbarSnd">
-            <img class="signupLogo" src="./assets/contactLogo.png" alt="img" width="20" height="20">
+            <img class="signupLogo" src="./assets/contactLogo1.png" alt="img" width="20" height="20">
             <a href="signupPage.cfm">SignUp</a>
             <img class="loginLogo" src="./assets/login.png" alt="img" width="20" height="20">
             <a href="loginPage.cfm">Login</a>
