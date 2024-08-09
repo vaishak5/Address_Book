@@ -120,7 +120,7 @@ $(document).ready(function () {
         dataType: "text",
         data: formData,
         success: function (response) {
-          if (response == "true") {
+          if (response == true) {
             window.location.href = "./listPage.cfm";
           } else if (response == "true") {
             window.location.href = "./listPage.cfm";
@@ -160,7 +160,7 @@ $(document).ready(function () {
 
   /*View Full Data Row*/
   $(".view").click(function () {
-    var contactId = $(this).data("id");
+    var contactId = $(this).attr("data-id");
     $.ajax({
       type: "POST",
       url: "./component/addressBook.cfc?method=viewDatas",
@@ -201,16 +201,10 @@ $(document).ready(function () {
         },
         success: function (response) {
           console.log(response);
-          $("#profile").attr("value", "./assets/" + response.profilePic)[0]
-            .files[0];
+          $("#profile").attr("value", "./assets/" + response.profilePic)[0].files[0];
           var selectDetails = JSON.parse(response);
           var date = new Date(selectDetails.dob);
-          var dateSet =
-            date.getFullYear() +
-            "-" +
-            ("0" + (date.getMonth() + 1)).slice(-2) +
-            "-" +
-            ("0" + date.getDate()).slice(-2);
+          var dateSet = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
           console.log(response);
           console.log(selectDetails.myFile);
           console.log(selectDetails);
@@ -289,9 +283,9 @@ function signValidation() {
     $("#confirmError").show();
     isValid = false;
   } else {
-    if (fullName == "") {
+    if (fullName == "" || /\d/.test(fullName)) {
       $("#fullNameError")
-        .html("Please enter the full name")
+        .html("Please enter a valid full name (non-numeric)")
         .css("color", "red");
       $("#fullNameError").show();
       isValid = false;
@@ -309,9 +303,9 @@ function signValidation() {
       $("#emailError").show();
       isValid = false;
     }
-    if (userName == "") {
+    if (userName == "" || /\d/.test(userName)) {
       $("#usernameError")
-        .html("Please enter a valid User Name.")
+        .html("Please enter a valid User Name(non-numeric)")
         .css("color", "red");
       $("#usernameError").show();
       isValid = false;
@@ -391,7 +385,7 @@ function formValidation() {
     }
     if (firstName === "" || /\d/.test(firstName) || firstName.length > 20) {
       errorMsg.push(
-        "Please enter a valid first name (up to 20 characters, no digits"
+        "Please enter a valid first name (up to 20 characters, no digits)"
       );
       isValid = false;
     }

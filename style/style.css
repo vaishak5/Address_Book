@@ -193,6 +193,9 @@ h1{
     display: flex;
     gap: 20px;
 }
+.downloadSet img{
+    cursor:pointer;
+}
 .body{
     display: flex;
     justify-content: center;

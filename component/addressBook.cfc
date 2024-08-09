@@ -18,7 +18,6 @@
             <cfreturn "false">
         <cfelse>
             <cfset local.hashedPassword = Hash(arguments.password, "SHA-256")>
-            <cfset local.dummy = "518FFED71D49E52E0E968FF881C0B19B535E40973B13455E3F2E25336F912D41">
             <cfquery name="insertValues"  datasource="DESKTOP-8VHOQ47">
                 INSERT INTO register (fullName,  emailId, password, imgFile, userName)
                 VALUES (
@@ -93,7 +92,7 @@
                     profilePic=<cfqueryparam value="#local.img#" cfsqltype="CF_SQL_VARCHAR">
                 WHERE contactId = <cfqueryparam value="#arguments.hiddenContactId#" cfsqltype="cf_sql_integer">
             </cfquery>
-            <cfreturn "true">
+            <cfreturn true>
         <cfelse>
             <cfquery name="checkEmail" datasource="DESKTOP-8VHOQ47">
                 SELECT * FROM contactDetails 
@@ -191,7 +190,7 @@
             <cfset local.result['email']=selectInputs.emailID>
             <cfset local.result['pincode']=selectInputs.pincode>
             <cfset local.result['myFile'] = selectInputs.profilePic>
-            </cfif>
+        </cfif>
         <cfset serializedContact = serializeJSON(local.result)>
     <cfreturn serializedContact>
 </cffunction>

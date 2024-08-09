@@ -1,6 +1,5 @@
 <cfscript>
     component persistent="true" table="contactDetails" {
-
     property name="contactId" fieldtype="id" generator="identity";
     property name="title";
     property name="firstName";

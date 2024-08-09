@@ -211,7 +211,6 @@
                                           Edit
                                           </button>
                                        </td>
-                                       
                                        <td><button type="submit" class="btn btn-primary delete"  data-id="#variables.contactId#">Delete</button></td>
                                        <td><button type="button" class="btn btn-primary view" data-bs-toggle="modal" data-bs-target="##exampleModal2"  data-id="#variables.contactId#">View</button></td>
                                        <!--View Modal -->
