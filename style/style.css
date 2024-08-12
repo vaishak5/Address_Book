@@ -306,7 +306,10 @@ h1{
     width: 120px;
     height: 123px;
 }
-
+#passwordError{
+    width:300px;
+    height:auto;
+}
 
 
 

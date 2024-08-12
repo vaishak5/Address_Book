@@ -28,7 +28,7 @@ $(document).ready(function () {
             window.location.href = "./loginPage.cfm";
           } else if (response === "false") {
             console.log(response);
-            alert("User Already exists!");
+            alert("Email ID Already exists!");
           }
         },
         error: function (xhr, status, error) {
@@ -90,7 +90,7 @@ $(document).ready(function () {
     var firstName = $("#firstName").val().trim();
     var lastName = $("#lastName").val().trim();
     var gender = $("#gender").val().trim();
-    var dob = $("#dob").val().trim();
+    var dob=$("#dob").val().trim();
     var profile = $("#profile")[0].files[0];
     var address = $("#address").val().trim();
     var street = $("#street").val().trim();
@@ -120,7 +120,7 @@ $(document).ready(function () {
         dataType: "text",
         data: formData,
         success: function (response) {
-          if (response == true) {
+          if (response == "true") {
             window.location.href = "./listPage.cfm";
           } else if (response == "true") {
             window.location.href = "./listPage.cfm";
@@ -142,20 +142,24 @@ $(document).ready(function () {
   $(".delete").click(function () {
     var contactId = $(this).attr("data-id");
     var deleting = $(this);
-    $.ajax({
-      type: "POST",
-      url: "./component/addressBook.cfc?method=deleteDatas",
-      dataType: "text",
-      data: { contactId: contactId },
-      success: function (response) {
-        alert("Data is deleted successfully!!");
-        $(deleting).parents("tr").remove(); //remove previous row element datas
-      },
-      error: function (xhr, status, error) {
-        console.error(error);
-        alert("Error deleting record.");
-      },
-    });
+    if (confirm("Are you sure you want to delete this record?")) {
+      $.ajax({
+        type: "POST",
+        url: "./component/addressBook.cfc?method=deleteDatas",
+        dataType: "text",
+        data: { contactId: contactId },
+        success: function (response) {
+          alert("Data is deleted successfully!!");
+          $(deleting).parents("tr").remove(); //remove previous row element datas
+        },
+        error: function (xhr, status, error) {
+          console.error(error);
+          alert("Error deleting record.");
+        },
+      
+      });
+    }
+    
   });
 
   /*View Full Data Row*/
@@ -316,7 +320,7 @@ function signValidation() {
       isValid = false;
     } else if (!isValidPassword(password)) {
       $("#passwordError")
-        .html("Password must contain all kind of formats!")
+        .html("Password contains 8 characters including uppercase,lowercase,special characters and digits")
         .css("color", "red");
       $("#passwordError").show();
       isValid = false;
@@ -354,7 +358,16 @@ function formValidation() {
   var firstName = $("#firstName").val().trim();
   var lastName = $("#lastName").val().trim();
   var gender = $("#gender").val().trim();
+  var d = new Date();
+  var year = d.getFullYear();
+  var month = String(d.getMonth() + 1).padStart(2, '0'); 
+  var day = String(d.getDate()).padStart(2, '0'); 
+  var strDate = year + "-" + month + "-" + day;
+  console.log("Current Date:", strDate);
   var dob = $("#dob").val().trim();
+  console.log("Date of Birth:", dob);
+  var currentDate = new Date(strDate);
+  var dobDate=new Date(dob);
   var profile = $("#profile").val().trim();
   var address = $("#address").val().trim();
   var street = $("#street").val().trim();
@@ -363,12 +376,14 @@ function formValidation() {
   var pincode = $("#pincode").val().trim();
   var isValid = true;
   var errorMsg = [];
+  var specialCharRegex = /[<>]/;
+
   if (
     title === "" ||
     firstName === "" ||
     lastName === "" ||
     gender === "" ||
-    dob === "" ||
+    dobDate === "" ||
     profile === "" ||
     address === "" ||
     street === "" ||
@@ -385,13 +400,13 @@ function formValidation() {
     }
     if (firstName === "" || /\d/.test(firstName) || firstName.length > 20) {
       errorMsg.push(
-        "Please enter a valid first name (up to 20 characters, no digits)"
+        "Please enter a valid first name. "
       );
       isValid = false;
     }
     if (lastName === "" || /\d/.test(lastName) || lastName.length > 20) {
       errorMsg.push(
-        "Please enter a valid last name (up to 20 characters, no digits)."
+        "Please enter a valid last name "
       );
       isValid = false;
     }
@@ -399,27 +414,27 @@ function formValidation() {
       errorMsg.push("Please select a gender.");
       isValid = false;
     }
-    if (dob === "") {
-      errorMsg.push("Please enter a date of birth.");
+    if (dob === "" || (dobDate > currentDate) ) {
+      errorMsg.push("Please enter a proper DOB");
       isValid = false;
     }
     if (profile === "") {
       errorMsg.push("Please select a profile picture.");
       isValid = false;
     }
-    if (address === "" || address.length > 100) {
-      errorMsg.push("Please enter a valid address (up to 100 characters).");
+    if (address === "" || address.length > 100 || specialCharRegex.test(address) ) {
+      errorMsg.push("Please enter a valid address");
       isValid = false;
     }
-    if (street === "" || street.length > 50) {
-      errorMsg.push("Please enter a valid street (up to 50 characters");
+    if (street === "" || street.length > 50 || specialCharRegex.test(street)) {
+      errorMsg.push("Please enter a valid street");
       isValid = false;
     }
     if (phoneNum === "" || !/^\d{10}$/.test(phoneNum)) {
       errorMsg.push("Please enter a valid 10-digit phone number.");
       isValid = false;
     }
-    if (email === "" || !/\S+@\S+\.\S+/.test(email)) {
+    if (email === "" || !(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/).test(email)){
       errorMsg.push("Please enter a valid email address.");
       isValid = false;
     }

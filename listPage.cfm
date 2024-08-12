@@ -100,7 +100,7 @@
                                                       </div>
                                                       <div class="dateSet d-flex flex-column">
                                                          <label for="dob" class="dob col-10">Date Of Birth*:</label>
-                                                         <input type="date" id="dob" name="dob" required>
+                                                         <input type="date" id="dob" name="dob"  required>
                                                       </div>
                                                    </div>
                                                    <!---Third Input--->
