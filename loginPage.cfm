@@ -47,7 +47,7 @@
                     </div>
                     <div class="anotherAccess">
                         <img class="fb" src="./assets/fb.png" alt="img" width="40" height="40">
-                        <img class="google" src="./assets/google.png" alt="img" width="30" height="30">
+                        <img class="google" src="./assets/google1.png" alt="img" width="30" height="30">
                     </div>
                     <div class="registerCont">
                         <p class="accountTxt">Don't have an account?</p>

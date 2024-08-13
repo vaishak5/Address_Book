@@ -3,31 +3,38 @@
     <cffunction name="isEmailUnique" access="remote" returnFormat="plain">
         <cfargument name="emailId" required="true">
         <cfset var emailExists = false>
-        <!--- Checking EMAIL ID in register table --->
-        
-        <cfquery name="checkRegister" datasource="DESKTOP-8VHOQ47">
-            SELECT 1 
-            FROM register 
-            WHERE emailId = <cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">
+        <!--- JOIN BOTH THE TABLES --->
+        <cfquery name="checkEmail" datasource="DESKTOP-8VHOQ47">
+            SELECT COUNT(*) AS EmailCount
+            FROM (
+                SELECT emailId FROM register WHERE emailId = <cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">
+                UNION ALL
+                SELECT emailID FROM contactDetails WHERE emailID = <cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">
+            ) AS CombinedResults
         </cfquery>
-        <cfif checkRegister.recordCount>
+        <cfif checkEmail.EmailCount GT 0>
             <cfset emailExists = true>
         </cfif>
-        <!--- Checking EMAIL ID in contactDetails table --->
-        
-        <cfif not emailExists>
-            <cfquery name="checkContactDetails" datasource="DESKTOP-8VHOQ47">
-                SELECT 1 
-                FROM contactDetails 
-                WHERE emailID = <cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">
-            </cfquery>
-            <cfif checkContactDetails.recordCount>
-                <cfset emailExists = true>
-            </cfif>
-        </cfif>
+       
         <cfreturn emailExists>
-    </cffunction>
-    
+    </cffunction> 
+
+    <!---Check Own Email--->
+   <!--- <cffunction name="ownEmail" access="remote" returnFormat="plain">
+        <cfargument name="emailId" required="true">
+        <cfset var emailExists = false>
+        <cfquery name="checkOwnEmail" datasource="DESKTOP-8VHOQ47">
+            SELECT emailID 
+            FROM contactDetails 
+            WHERE emailID = <cfqueryparam value="#arguments.emailId#" cfsqltype="cf_sql_varchar">
+        </cfquery>
+        <cfif checkOwnEmail.recordCount>
+            <cfreturn true>
+        <cfelse>
+            <cfreturn false>
+        </cfif>
+    </cffunction> --->
+ 
     <!---Sign Up--->
     <cffunction name="signUpload" access="remote" returnFormat="plain">
         <cfargument  name="fullName" required="true">
@@ -87,7 +94,7 @@
     </cffunction>
 
     <!---Adding new datas to the field--->
-    <cffunction name="dataUpload" access="remote" returnFormat="plain">
+  <cffunction name="dataUpload" access="remote" returnFormat="plain">
     <cfargument name="hiddenContactId" required="true"> 
     <cfargument name="title" required="true"> 
     <cfargument name="firstName" required="true">
@@ -100,61 +107,67 @@
     <cfargument name="email" required="true">
     <cfargument name="pincode" required="true">
     <cfset var emailUnique = isEmailUnique(arguments.email)>
-    <cfset var local.imgPath = ExpandPath("../assets/")>
-    <cfset var local.img = "">
+    <cfset var ownEmailid = ownEmail(arguments.email)>
     <cfif arguments.hiddenContactId GT 0>
-        <!--- Update existing record --->
-        <cfif not emailUnique>
-            <cffile action="upload" filefield="profile" destination="#local.imgPath#" nameconflict="makeunique">
-            <cfset local.img = cffile.serverFile>
-            <cfquery name="updateQuery" datasource="DESKTOP-8VHOQ47">
-                UPDATE contactDetails 
-                SET firstName = <cfqueryparam value="#arguments.firstName#" cfsqltype="cf_sql_varchar">,
-                    larstName = <cfqueryparam value="#arguments.lastName#" cfsqltype="cf_sql_varchar">,
-                    gender = <cfqueryparam value="#arguments.gender#" cfsqltype="cf_sql_varchar">,
-                    dob = <cfqueryparam value="#arguments.dob#" cfsqltype="cf_sql_varchar">,
-                    addressField = <cfqueryparam value="#arguments.address#" cfsqltype="cf_sql_varchar">,
-                    street = <cfqueryparam value="#arguments.street#" cfsqltype="cf_sql_varchar">,
-                    phoneNumber = <cfqueryparam value="#arguments.phoneNumber#" cfsqltype="cf_sql_varchar">,
-                    emailID = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">,
-                    pincode = <cfqueryparam value="#arguments.pincode#" cfsqltype="cf_sql_varchar">,
-                    profilePic = <cfqueryparam value="#local.img#" cfsqltype="cf_sql_varchar">
-                WHERE contactId = <cfqueryparam value="#arguments.hiddenContactId#" cfsqltype="cf_sql_integer">
-            </cfquery>
-            <cfreturn true>
-        <cfelse>
-            <cfreturn false>
+            <cfif (arguments.email EQ ownEmailid) OR (NOT emailUnique)>
+                <cfset local.imgPath = ExpandPath("../assets/")>
+                <cfset local.img = "">
+                <cffile action="upload" filefield="profile" destination="#local.imgPath#" nameconflict="makeunique">
+                <cfset local.img =  cffile.serverFile>
+                <cfquery name="selectInputs" datasource="DESKTOP-8VHOQ47" result ="editDatassResult">
+                    UPDATE contactDetails 
+                    SET firstName=<cfqueryparam value="#arguments.firstName#" cfsqltype="cf_sql_varchar">,
+                        larstName=<cfqueryparam value="#arguments.lastName#" cfsqltype="cf_sql_varchar">,
+                        gender=<cfqueryparam value="#arguments.gender#" cfsqltype="cf_sql_varchar">,
+                        dob=<cfqueryparam value="#arguments.dob#" cfsqltype="cf_sql_varchar">,
+                        addressField=<cfqueryparam value="#arguments.address#" cfsqltype="cf_sql_varchar">,
+                        street=<cfqueryparam value="#arguments.street#" cfsqltype="cf_sql_varchar">,
+                        phoneNumber=<cfqueryparam value="#arguments.phoneNumber#" cfsqltype="cf_sql_varchar">,
+                        emailID=<cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">,
+                        pincode=<cfqueryparam value="#arguments.pincode#" cfsqltype="cf_sql_varchar">,
+                        profilePic=<cfqueryparam value="#local.img#" cfsqltype="CF_SQL_VARCHAR">
+                    WHERE contactId = <cfqueryparam value="#arguments.hiddenContactId#" cfsqltype="cf_sql_integer">
+                </cfquery>
+                    <cfreturn true>
+            <cfelse>
+                <cfquery name="checkEmail" datasource="DESKTOP-8VHOQ47">
+                    SELECT * FROM contactDetails 
+                    WHERE emailID=<cfqueryparam value="#arguments.email#" cfsqltype="CF_SQL_VARCHAR">
+                </cfquery>
+                <cfif checkEmail.recordCount>
+                    <cfreturn false>
+            
+               </cfif> 
+            </cfif> 
+            
+       <cfelse>
+            <!--- Insert new record --->
+            <cfif not emailUnique>
+                <cfset local.imgPath = ExpandPath("../assets/")>
+                    <cfset local.img = "">
+                <cffile action="upload" filefield="profile" destination="#local.imgPath#" nameconflict="makeunique">
+                <cfset local.img = cffile.serverFile>
+                <cfquery name="insertQuery" datasource="DESKTOP-8VHOQ47">
+                    INSERT INTO contactDetails (title, firstName, larstName, gender, dob, profilePic, addressField, street, phoneNumber, emailID, pincode, userId)
+                    VALUES (
+                        <cfqueryparam value="#arguments.title#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.firstName#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.lastName#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.gender#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.dob#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#local.img#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.address#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.street#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.phoneNumber#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.pincode#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#session.userId#" cfsqltype="cf_sql_varchar">
+                    )
+                </cfquery>
+                <cfreturn true>
+            </cfif>
         </cfif>
-    <cfelse>
-        <!--- Insert new record --->
-        <cfif not emailUnique>
-            <cffile action="upload" filefield="profile" destination="#local.imgPath#" nameconflict="makeunique">
-            <cfset local.img = cffile.serverFile>
-            <cfquery name="insertQuery" datasource="DESKTOP-8VHOQ47">
-                INSERT INTO contactDetails (title, firstName, larstName, gender, dob, profilePic, addressField, street, phoneNumber, emailID, pincode, userId)
-                VALUES (
-                    <cfqueryparam value="#arguments.title#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.firstName#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.lastName#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.gender#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.dob#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#local.img#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.address#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.street#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.phoneNumber#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.pincode#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#session.userId#" cfsqltype="cf_sql_varchar">
-                )
-            </cfquery>
-
-            <cfreturn true>
-        <cfelse>
-            <cfreturn false>
-        </cfif>
-    </cfif>
-</cffunction>
-
+    </cffunction> 
 
     <!---Deleting Particular Row--->
     <cffunction name="deleteDatas" access="remote" returnFormat="plain">
