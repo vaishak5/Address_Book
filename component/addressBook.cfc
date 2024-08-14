@@ -2,39 +2,42 @@
     <!---Email Checking --->
     <cffunction name="isEmailUnique" access="remote" returnFormat="plain">
         <cfargument name="emailId" required="true">
+        <cfargument  name="id" required="false">
         <cfset var emailExists = false>
         <!--- JOIN BOTH THE TABLES --->
-        <cfquery name="checkEmail" datasource="DESKTOP-8VHOQ47">
+        <cfif arguments.id gt 0>
+            <cfquery name="checkEmail" datasource="DESKTOP-8VHOQ47">
             SELECT COUNT(*) AS EmailCount
             FROM (
                 SELECT emailId FROM register WHERE emailId = <cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">
                 UNION ALL
                 SELECT emailID FROM contactDetails WHERE emailID = <cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">
+                AND contactID NOT IN (<cfqueryparam value="#arguments.id#" cfsqltype="CF_SQL_INTEGER">)
+                
             ) AS CombinedResults
-        </cfquery>
-        <cfif checkEmail.EmailCount GT 0>
-            <cfset emailExists = true>
+            </cfquery>
+            <cfif checkEmail.EmailCount GT 0>
+                <cfset emailExists = true>
+            </cfif>
+            <cfreturn emailExists>
+       <cfelseif arguments.id eq 0>
+            <cfquery name="checkEmail" datasource="DESKTOP-8VHOQ47">
+                SELECT COUNT(*) AS EmailCount
+                FROM (
+                    SELECT emailId FROM register WHERE emailId = <cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">
+                    UNION ALL
+                    SELECT emailID FROM contactDetails WHERE emailID = <cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">
+                    
+                    
+                ) AS CombinedResults
+            </cfquery>
+            <cfif checkEmail.EmailCount GT 0>
+                <cfset emailExists = true>
+            </cfif>
+            <cfreturn emailExists>
         </cfif>
-       
-        <cfreturn emailExists>
     </cffunction> 
 
-    <!---Check Own Email--->
-   <!--- <cffunction name="ownEmail" access="remote" returnFormat="plain">
-        <cfargument name="emailId" required="true">
-        <cfset var emailExists = false>
-        <cfquery name="checkOwnEmail" datasource="DESKTOP-8VHOQ47">
-            SELECT emailID 
-            FROM contactDetails 
-            WHERE emailID = <cfqueryparam value="#arguments.emailId#" cfsqltype="cf_sql_varchar">
-        </cfquery>
-        <cfif checkOwnEmail.recordCount>
-            <cfreturn true>
-        <cfelse>
-            <cfreturn false>
-        </cfif>
-    </cffunction> --->
- 
     <!---Sign Up--->
     <cffunction name="signUpload" access="remote" returnFormat="plain">
         <cfargument  name="fullName" required="true">
@@ -106,10 +109,10 @@
     <cfargument name="phoneNumber" required="true">
     <cfargument name="email" required="true">
     <cfargument name="pincode" required="true">
-    <cfset var emailUnique = isEmailUnique(arguments.email)>
-    <cfset var ownEmailid = ownEmail(arguments.email)>
+    <cfset var emailUnique = isEmailUnique(arguments.email,arguments.hiddenContactId)>
     <cfif arguments.hiddenContactId GT 0>
-            <cfif (arguments.email EQ ownEmailid) OR (NOT emailUnique)>
+            <!---Update records(edit set)--->
+             <cfif NOT emailUnique>
                 <cfset local.imgPath = ExpandPath("../assets/")>
                 <cfset local.img = "">
                 <cffile action="upload" filefield="profile" destination="#local.imgPath#" nameconflict="makeunique">
@@ -130,21 +133,13 @@
                 </cfquery>
                     <cfreturn true>
             <cfelse>
-                <cfquery name="checkEmail" datasource="DESKTOP-8VHOQ47">
-                    SELECT * FROM contactDetails 
-                    WHERE emailID=<cfqueryparam value="#arguments.email#" cfsqltype="CF_SQL_VARCHAR">
-                </cfquery>
-                <cfif checkEmail.recordCount>
-                    <cfreturn false>
-            
-               </cfif> 
-            </cfif> 
-            
-       <cfelse>
-            <!--- Insert new record --->
+					<cfreturn false>
+            </cfif>
+         <cfelse>   
+       <!--- Insert new record --->
             <cfif not emailUnique>
                 <cfset local.imgPath = ExpandPath("../assets/")>
-                    <cfset local.img = "">
+                <cfset local.img = "">
                 <cffile action="upload" filefield="profile" destination="#local.imgPath#" nameconflict="makeunique">
                 <cfset local.img = cffile.serverFile>
                 <cfquery name="insertQuery" datasource="DESKTOP-8VHOQ47">
@@ -165,6 +160,8 @@
                     )
                 </cfquery>
                 <cfreturn true>
+                <cfelse>
+                    <cfreturn false>
             </cfif>
         </cfif>
     </cffunction> 
@@ -236,4 +233,7 @@
         <cfset serializedContact = serializeJSON(local.result)>
     <cfreturn serializedContact>
 </cffunction>
-</cfcomponent>
+</cfcomponent> 
+
+
+

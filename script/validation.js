@@ -104,7 +104,8 @@ $(document).ready(function () {
     formData.append("lastName", lastName);
     formData.append("gender", gender);
     formData.append("dob", dob);
-    formData.append("profile", profile);
+   formData.append("profile", profile); 
+    
     formData.append("address", address);
     formData.append("street", street);
     formData.append("phoneNumber", phoneNum);
@@ -120,12 +121,14 @@ $(document).ready(function () {
         dataType: "text",
         data: formData,
         success: function (response) {
+          console.log(response);
           if (response == "true") {
+         
             window.location.href = "./listPage.cfm";
-          } else if (response == "true") {
-            window.location.href = "./listPage.cfm";
-          } else if (response == "false") {
-            alert("Email ID already present!!");
+          } 
+          else if(response == "false"){
+            $("#errorMsg").html("Email ID already present!!").css("color", "red");
+    
           }
         },
         error: function (xhr, status, error) {
@@ -150,7 +153,7 @@ $(document).ready(function () {
         data: { contactId: contactId },
         success: function (response) {
           alert("Data is deleted successfully!!");
-          $(deleting).parents("tr").remove(); //remove previous row element datas
+          $(deleting).parents("tr").remove(); //remove parent   element datas
         },
         error: function (xhr, status, error) {
           console.error(error);
