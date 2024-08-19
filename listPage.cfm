@@ -74,9 +74,9 @@
                                                          <label for="title" class="title col-3">Title*</label>
                                                          <select name="title" id="titles" required>
                                                             <option value selected="selected"></option>
-                                                            <option value="mr">MR.</option>
-                                                            <option value="mrs">MRS.</option>
-                                                            <option value="ms">MS.</option>
+                                                            <option value="MR.">Mr.</option>
+                                                            <option value="MRS.">Mrs.</option>
+                                                            <option value="MS.">Ms.</option>
                                                          </select>
                                                       </div>
                                                       <div class="firstName d-flex flex-column">
@@ -94,8 +94,8 @@
                                                          <label for="gender" class="title col-3">Gender*</label>
                                                          <select name="gender" id="gender" required>
                                                             <option value selected="selected"></option>
-                                                            <option value="male">MALE</option>
-                                                            <option value="female">FEMALE</option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
                                                          </select>
                                                       </div>
                                                       <div class="dateSet d-flex flex-column">
@@ -131,7 +131,7 @@
                                                    <div class="inputSet d-flex gap-5 py-2">
                                                       <div class="firstName d-flex flex-column col-5">
                                                          <label for="fname"  class="fname col-7">Phone Number*</label>
-                                                         <input type="text" name="fname" maxlength="10" id="phoneNumber" required>
+                                                         <input type="text" name="fname"  id="phoneNumber" required>
                                                       </div>
                                                       <div class="lastName d-flex flex-column col-5">
                                                          <label for="lname" class="lname col-3">Email*</label>
@@ -278,7 +278,7 @@
             </div>
             </div>
             <cfelse>
-            <cflocation  url="loginPage.cfm">
+               <cflocation  url="loginPage.cfm">
          </cfif>
       </body>
    </html>

@@ -221,6 +221,7 @@ h1{
 }
 .navbarFt h3{
     color:white;
+    cursor: default;
 }
 .heading{
     padding-top: 10px;

@@ -33,9 +33,7 @@ $(document).ready(function () {
         },
         error: function (xhr, status, error) {
           console.error(error);
-          alert(
-            "An error occurred while submitting the form. Please try again."
-          );
+          alert("An error occurred while submitting the form. Please try again.");
         },
       });
     }
@@ -65,9 +63,7 @@ $(document).ready(function () {
         },
         error: function (xhr, status, error) {
           console.error(error);
-          alert(
-            "An error occurred while submitting the form. Please try again."
-          );
+          alert("An error occurred while submitting the form. Please try again.");
         },
       });
     }
@@ -104,8 +100,7 @@ $(document).ready(function () {
     formData.append("lastName", lastName);
     formData.append("gender", gender);
     formData.append("dob", dob);
-   formData.append("profile", profile); 
-    
+    formData.append("profile", profile); 
     formData.append("address", address);
     formData.append("street", street);
     formData.append("phoneNumber", phoneNum);
@@ -123,19 +118,15 @@ $(document).ready(function () {
         success: function (response) {
           console.log(response);
           if (response == "true") {
-         
             window.location.href = "./listPage.cfm";
           } 
           else if(response == "false"){
             $("#errorMsg").html("Email ID already present!!").css("color", "red");
-    
           }
         },
         error: function (xhr, status, error) {
           console.error(error);
-          alert(
-            "An error occurred while submitting the form. Please try again."
-          );
+          alert("An error occurred while submitting the form. Please try again.");
         },
       });
     }
@@ -153,16 +144,14 @@ $(document).ready(function () {
         data: { contactId: contactId },
         success: function (response) {
           alert("Data is deleted successfully!!");
-          $(deleting).parents("tr").remove(); //remove parent   element datas
+          $(deleting).parents("tr").remove(); //remove parent element datas
         },
         error: function (xhr, status, error) {
           console.error(error);
           alert("Error deleting record.");
         },
-      
       });
     }
-    
   });
 
   /*View Full Data Row*/
@@ -256,44 +245,24 @@ function signValidation() {
   var confirmPassword = $("#confirmPassword").val().trim();
   $(".error").hide();
   var isValid = true;
-  if (
-    fullName == "" &&
-    file == "" &&
-    emailId == "" &&
-    userName == "" &&
-    password == "" &&
-    confirmPassword == ""
-  ) {
-    $("#fullNameError")
-      .html("This field is required. Please enter a value.")
-      .css("color", "red");
+  if (fullName == "" && file == "" && emailId == "" && userName == "" && password == "" && confirmPassword == "") {
+    $("#fullNameError").html("This field is required. Please enter a value.").css("color", "red");
     $("#fullNameError").show();
-    $("#fileError")
-      .html("This field is required. Please enter a value.")
-      .css("color", "red");
+    $("#fileError").html("This field is required. Please enter a value.").css("color", "red");
     $("#fileError").show();
-    $("#emailError")
-      .html("This field is required. Please enter a value.")
-      .css("color", "red");
+    $("#emailError").html("This field is required. Please enter a value.").css("color", "red");
     $("#emailError").show();
-    $("#usernameError")
-      .html("This field is required. Please enter a value.")
-      .css("color", "red");
+    $("#usernameError").html("This field is required. Please enter a value.").css("color", "red");
     $("#usernameError").show();
-    $("#passwordError")
-      .html("This field is required. Please enter a value.")
-      .css("color", "red");
+    $("#passwordError").html("This field is required. Please enter a value.").css("color", "red");
     $("#passwordError").show();
-    $("#confirmError")
-      .html("This field is required. Please enter a value.")
-      .css("color", "red");
+    $("#confirmError").html("This field is required. Please enter a value.").css("color", "red");
     $("#confirmError").show();
     isValid = false;
-  } else {
+  } 
+  else {
     if (fullName == "" || /\d/.test(fullName)) {
-      $("#fullNameError")
-        .html("Please enter a valid full name (non-numeric)")
-        .css("color", "red");
+      $("#fullNameError").html("Please enter a valid full name (non-numeric)").css("color", "red");
       $("#fullNameError").show();
       isValid = false;
     }
@@ -302,18 +271,13 @@ function signValidation() {
       $("#fileError").show();
       isValid = false;
     }
-
     if (!/\S+@\S+\.\S+/.test(emailId) || emailId == "") {
-      $("#emailError")
-        .html("Please enter a valid Email ID.")
-        .css("color", "red");
+      $("#emailError").html("Please enter a valid Email ID.").css("color", "red");
       $("#emailError").show();
       isValid = false;
     }
     if (userName == "" || /\d/.test(userName)) {
-      $("#usernameError")
-        .html("Please enter a valid User Name(non-numeric)")
-        .css("color", "red");
+      $("#usernameError").html("Please enter a valid User Name(non-numeric)").css("color", "red");
       $("#usernameError").show();
       isValid = false;
     }
@@ -322,22 +286,16 @@ function signValidation() {
       $("#passwordError").show();
       isValid = false;
     } else if (!isValidPassword(password)) {
-      $("#passwordError")
-        .html("Password contains 8 characters including uppercase,lowercase,special characters and digits")
-        .css("color", "red");
+      $("#passwordError").html("Password contains 8 characters including uppercase,lowercase,special characters and digits").css("color", "red");
       $("#passwordError").show();
       isValid = false;
     }
     if (confirmPassword == "") {
-      $("#confirmError")
-        .html("Please enter the correct password")
-        .css("color", "red");
+      $("#confirmError").html("Please enter the correct password").css("color", "red");
       $("#confirmError").show();
     }
     if (password != confirmPassword) {
-      $("#confirmError")
-        .html("Please enter correct password")
-        .css("color", "red");
+      $("#confirmError").html("Please enter correct password").css("color", "red");
       $("#confirmError").show();
       isValid = false;
     }
@@ -381,36 +339,21 @@ function formValidation() {
   var errorMsg = [];
   var specialCharRegex = /[<>]/;
 
-  if (
-    title === "" ||
-    firstName === "" ||
-    lastName === "" ||
-    gender === "" ||
-    dobDate === "" ||
-    profile === "" ||
-    address === "" ||
-    street === "" ||
-    phoneNum === "" ||
-    email === "" ||
-    pincode === ""
-  ) {
+  if (title === "" || firstName === "" || lastName === "" || gender === "" || dobDate === "" || profile === "" || address === "" || street === "" || phoneNum === "" || email === "" || pincode === "" ) {
     errorMsg.push("All fields are required!");
     isValid = false;
-  } else {
+  } 
+  else {
     if (title === "") {
       errorMsg.push("Please select a title.");
       isValid = false;
     }
     if (firstName === "" || /\d/.test(firstName) || firstName.length > 20) {
-      errorMsg.push(
-        "Please enter a valid first name. "
-      );
+      errorMsg.push("Please enter a valid first name.");
       isValid = false;
     }
     if (lastName === "" || /\d/.test(lastName) || lastName.length > 20) {
-      errorMsg.push(
-        "Please enter a valid last name "
-      );
+      errorMsg.push("Please enter a valid last name ");
       isValid = false;
     }
     if (gender === "") {
@@ -433,7 +376,7 @@ function formValidation() {
       errorMsg.push("Please enter a valid street");
       isValid = false;
     }
-    if (phoneNum === "" || !/^\d{10}$/.test(phoneNum)) {
+    if (phoneNum === "" || !/^\+91[\-\s]?\d{10}$/.test(phoneNum)) {
       errorMsg.push("Please enter a valid 10-digit phone number.");
       isValid = false;
     }
