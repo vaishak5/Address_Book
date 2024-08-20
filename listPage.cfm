@@ -266,8 +266,8 @@
                                           </div>
                                        </div>
                                     </tr>
-                                    <cfelse>
-                                       <cfcontinue>
+                                 <cfelse>
+                                    <cfcontinue>
                                  </cfif>
                               </cfloop>
                            </tbody>
@@ -277,8 +277,8 @@
                </div>
             </div>
             </div>
-            <cfelse>
-               <cflocation  url="loginPage.cfm">
+         <cfelse>
+            <cflocation  url="loginPage.cfm">
          </cfif>
       </body>
    </html>

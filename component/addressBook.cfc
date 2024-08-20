@@ -38,16 +38,20 @@
 
     <!---For signUp(emailcheck)--->
     <cffunction  name="emailFind" access="remote" returnFormat="plain">
-    <cfargument name="emailId" required="true">
-    <cfquery name="checkingEmail" datasource="DESKTOP-8VHOQ47">
-        SELECT 1 FROM register
-        WHERE emailId=<cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">
-    </cfquery>
-    <cfif checkingEmail.recordcount>
-        <cfreturn true>
-    <cfelse>
-        <cfreturn false>
-    </cfif>
+        <cfargument name="emailId" required="true">
+        <cfquery name="checkingEmail" datasource="DESKTOP-8VHOQ47">
+            SELECT COUNT(*) AS emailcheckCount
+            FROM (
+                SELECT emailId FROM register WHERE emailId = <cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">
+                UNION ALL
+                SELECT emailID FROM contactDetails WHERE emailID = <cfqueryparam value="#arguments.emailId#" cfsqltype="CF_SQL_VARCHAR">
+            ) AS CombinedResults
+        </cfquery>
+        <cfif checkingEmail.emailcheckCount>
+            <cfreturn true>
+        <cfelse>
+            <cfreturn false>
+        </cfif>
     </cffunction>
 
     <!---Sign Up--->

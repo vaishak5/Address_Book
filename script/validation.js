@@ -40,6 +40,7 @@ $(document).ready(function () {
     return false;
   });
 
+
   /*LOGIN*/
   $("#loginSubmit").click(function () {
     var emailId = $("#email").val().trim();
@@ -376,7 +377,7 @@ function formValidation() {
       errorMsg.push("Please enter a valid street");
       isValid = false;
     }
-    if (phoneNum === "" || !/^\+91[\-\s]?\d{10}$/.test(phoneNum)) {
+    if (phoneNum === "" || !/^(?:\+91[\-\s]?)?\d{10}$/.test(phoneNum) ){
       errorMsg.push("Please enter a valid 10-digit phone number.");
       isValid = false;
     }
