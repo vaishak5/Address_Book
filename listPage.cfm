@@ -18,34 +18,34 @@
       <script src="./script/reset.js"></script>
    </head>
    <body>
-        <cfif session.login>
-            <div class="navbar px-5">
-               <div class="navbarFt">
-                  <img class="addressLogo" src="./assets/bodyBook.png" alt="img" width="30" height="30">
-                  <h3 class="mb-0">ADDRESS BOOK</h3>
-               </div>
-               <div class="navbarSndSet">
-                  <img class="loginLogo" src="./assets/logout.png" alt="img" width="20" height="20">
-                  <a href="./component/addressBook.cfc?method=doLogout">Logout</a>
-               </div>
+      <cfif session.login>
+         <div class="navbar px-5">
+            <div class="navbarFt">
+               <img class="addressLogo" src="./assets/bodyBook.png" alt="img" width="30" height="30">
+               <h3 class="mb-0">ADDRESS BOOK</h3>
             </div>
-            <div class="mainSett">
-               <div class="body">
-                  <div class="bodyFt">
-                     <div class="downloadSet">
-                        <a href="listPdf.cfm"><img src="./assets/pdf.png" alt="img"></a>
-                        <a href="listExcel.cfm"><img src="./assets/excel.png" alt="img"></a>
-                        <img src="./assets/print.png" alt="img" id="printButton">
-                     </div>
+            <div class="navbarSndSet">
+               <img class="loginLogo" src="./assets/logout.png" alt="img" width="20" height="20">
+               <a href="./component/addressBook.cfc?method=doLogout">Logout</a>
+            </div>
+         </div>
+         <div class="mainSett">
+            <div class="body">
+               <div class="bodyFt">
+                  <div class="downloadSet">
+                     <a href="listPdf.cfm"><img src="./assets/pdf.png" alt="img"></a>
+                     <a href="listExcel.cfm"><img src="./assets/excel.png" alt="img"></a>
+                     <img src="./assets/print.png" alt="img" id="printButton">
                   </div>
                </div>
-               <div class="bodyConts">
-                  <div class="bodySnd">
-                     <div class="d-flex flex-column  bg-light text-dark me-2 text-center rounded">
-                        <div class="userProfile p-2">
-                           <img src="./assets/#session.imgFile#" class="rounded-circle img-fluid" alt="img" width="100">
-                        </div>
-                        <div class="userName p-2 ">#session.fullName#</div>
+            </div>
+            <div class="bodyConts">
+               <div class="bodySnd">
+                  <div class="d-flex flex-column  bg-light text-dark me-2 text-center rounded">
+                     <div class="userProfile p-2">
+                        <img src="./assets/#session.imgFile#" class="rounded-circle img-fluid" alt="img" width="100">
+                     </div>
+                     <div class="userName p-2 ">#session.fullName#</div>
                         <div class="p-2 ">
                            <button type="button" id="createContactButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="##exampleModal" >
                            Create Contact
@@ -276,10 +276,9 @@
                   </div>
                </div>
             </div>
-            </div>
-         <cfelse>
-            <cflocation  url="loginPage.cfm">
-         </cfif>
-      </body>
+      <cfelse>
+         <cflocation  url="loginPage.cfm">
+      </cfif>
+   </body>
    </html>
 </cfoutput>

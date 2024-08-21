@@ -14,49 +14,49 @@
     <script src="./script/validation.js"></script>
 </head>
 <body>
- <cfif session.login>
-    <cflocation url="listPage.cfm">
-<cfelse>
-    <div class="navbar">
-        <div class="navbarFt">
-            <img class="addressLogo" src="./assets/bodyBook.png" alt="img" width="30" height="30">
-            <h2>ADDRESS BOOK</h2>
-        </div>
-        <div class="navbarSnd">
-            <img class="signupLogo" src="./assets/contactLogo1.png" alt="img" width="20" height="20">
-            <a href="signupPage.cfm">SignUp</a>
-            <img class="loginLogo" src="./assets/login.png" alt="img" width="20" height="20">
-            <a href="loginPage.cfm">Login</a>
-        </div>
-    </div>
-    <div class="main">
-        <div class="mainSection">
-            <div class="mainBodyFt">
-                <img class="addressLogoImg" src="./assets/bodyBook.png" alt="img" width="75" height="75">
+    <cfif session.login>
+        <cflocation url="listPage.cfm">
+    <cfelse>
+        <div class="navbar">
+            <div class="navbarFt">
+                <img class="addressLogo" src="./assets/bodyBook.png" alt="img" width="30" height="30">
+                <h2>ADDRESS BOOK</h2>
             </div>
-            <div class="mainBodySnd">
-                <h1>LOGIN</h1>
-                <div class="mainBodySndCont">
-                    <form class="inputConts">
-                        <input type="email" class="inputs" placeholder="USERNAME" id="email">
-                        <input type="password" class="inputs" placeholder="PASSWORD" id="password">
-                    </form>
-                    <div class="loginBtn">
-                        <input type="button" class="submitBtnn" id="loginSubmit" value="Login">
-                        <p class="singinTxt"> Or Sign In Using</p>
-                    </div>
-                    <div class="anotherAccess">
-                        <img class="fb" src="./assets/fb.png" alt="img" width="40" height="40">
-                        <img class="google" src="./assets/google1.png" alt="img" width="30" height="30">
-                    </div>
-                    <div class="registerCont">
-                        <p class="accountTxt">Don't have an account?</p>
-                        <a href="signupPage.cfm" >Register Here</a>
+            <div class="navbarSnd">
+                <img class="signupLogo" src="./assets/contactLogo1.png" alt="img" width="20" height="20">
+                <a href="signupPage.cfm">SignUp</a>
+                <img class="loginLogo" src="./assets/login.png" alt="img" width="20" height="20">
+                <a href="loginPage.cfm">Login</a>
+            </div>
+        </div>
+        <div class="main">
+            <div class="mainSection">
+                <div class="mainBodyFt">
+                    <img class="addressLogoImg" src="./assets/bodyBook.png" alt="img" width="75" height="75">
+                </div>
+                <div class="mainBodySnd">
+                    <h1>LOGIN</h1>
+                    <div class="mainBodySndCont">
+                        <form class="inputConts">
+                            <input type="email" class="inputs" placeholder="USERNAME" id="email">
+                            <input type="password" class="inputs" placeholder="PASSWORD" id="password">
+                        </form>
+                        <div class="loginBtn">
+                            <input type="button" class="submitBtnn" id="loginSubmit" value="Login">
+                            <p class="singinTxt"> Or Sign In Using</p>
+                        </div>
+                        <div class="anotherAccess">
+                            <img class="fb" src="./assets/fb.png" alt="img" width="40" height="40">
+                            <img class="google" src="./assets/google1.png" alt="img" width="30" height="30">
+                        </div>
+                        <div class="registerCont">
+                            <p class="accountTxt">Don't have an account?</p>
+                            <a href="signupPage.cfm" >Register Here</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</cfif>
+    </cfif>
 </body>
 </html>

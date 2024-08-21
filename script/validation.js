@@ -137,6 +137,7 @@ $(document).ready(function () {
   $(".delete").click(function () {
     var contactId = $(this).attr("data-id");
     var deleting = $(this);
+    
     if (confirm("Are you sure you want to delete this record?")) {
       $.ajax({
         type: "POST",
@@ -272,7 +273,7 @@ function signValidation() {
       $("#fileError").show();
       isValid = false;
     }
-    if (!/\S+@\S+\.\S+/.test(emailId) || emailId == "") {
+    if (!(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$/).test(emailId) || emailId == "") {
       $("#emailError").html("Please enter a valid Email ID.").css("color", "red");
       $("#emailError").show();
       isValid = false;
@@ -381,7 +382,7 @@ function formValidation() {
       errorMsg.push("Please enter a valid 10-digit phone number.");
       isValid = false;
     }
-    if (email === "" || !(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/).test(email)){
+    if (email === "" || !(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$/).test(email)){
       errorMsg.push("Please enter a valid email address.");
       isValid = false;
     }
