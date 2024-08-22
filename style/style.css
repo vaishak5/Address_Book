@@ -311,6 +311,9 @@ h1{
     width:300px;
     height:auto;
 }
+.fb,.google{
+    cursor:pointer;
+}
 
 
 

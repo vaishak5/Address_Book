@@ -197,7 +197,7 @@
     <cffunction name="viewDatas" access="remote" returnformat="plain">
         <cfargument name="contactId" type="numeric" required="true">
         <cfquery name="contactSet" datasource="DESKTOP-8VHOQ47">
-            SELECT contactId
+            SELECT contactId,title,firstName,larstName,gender,dob,profilePic,addressField,street,phoneNumber,emailID,pincode
             FROM contactDetails
             WHERE contactId = <cfqueryparam value="#arguments.contactId#" cfsqltype="cf_sql_integer">
         </cfquery>
@@ -220,10 +220,11 @@
     <cffunction name="selectDatas" access="remote" returnformat="PLAIN">
         <cfargument name="contactId" required="true">
         <cfquery name="selectInputs" datasource="DESKTOP-8VHOQ47">
-            SELECT contactId
+            SELECT contactId,title,firstName,larstName,gender,dob,profilePic,addressField,street,phoneNumber,emailID,pincode
             FROM contactDetails 
             WHERE contactId = <cfqueryparam value="#arguments.contactId#" cfsqltype="cf_sql_integer">
         </cfquery>
+        
         <cfset  local.result = {}>
         <cfif selectInputs.recordCount>
             <cfset local.result['contactId'] = selectInputs.contactId>
@@ -246,6 +247,67 @@
     <cffunction  name="doLogout" returntype="any" access="remote">
         <cfset session.login=false>
         <cflocation url="../loginPage.cfm">
+    </cffunction>
+
+    <!---SSO--->
+    <cffunction name="googleLogin" access="remote" returnFormat="PLAIN" output="false">
+        <cfargument name="emailID" required="true">
+        <cfargument name="name" required="true">
+        <cfargument name="image" required="true">
+        <cfset var result = createObject("component", "addressBook") >
+        <cfset var ssoLogin = {} >
+        <cfset var saveSSO = {} >
+        <cfset var response = "">
+        <cfset ssoLogin = result.ssoLogin(arguments.emailID) ><!--- Check if user already exists in Google login --->
+        <cfif ssoLogin.recordCount>
+            <cfset session.login = true>
+            <cfset session.sso = true>
+            <cfset session.fullName = ssoLogin.fullName>
+            <cfset session.imgFile = ssoLogin.imgFile>
+            <cfset session.userID = ssoLogin.userId>
+            <cfset response=true>
+        <cfelse>
+            <cfset saveSSO = result.saveSSO(arguments.emailID, arguments.name, arguments.image)><!--- Save user in SSO --->
+            <cfif saveSSO>
+                <cfset ssoLogin = result.ssoLogin(arguments.emailID)>
+                <cfif ssoLogin.recordCount>
+                    <cfset session.login = true>
+                    <cfset session.sso = true>
+                    <cfset session.fullName = ssoLogin.fullName>
+                    <cfset session.imgFile = ssoLogin.imgFile>
+                    <cfset session.userID = ssoLogin.userId>
+                </cfif>
+                <cfset response=true>
+            </cfif>
+        </cfif>
+        <cfreturn response >
+    </cffunction>
+    
+    <!---SSO Items--->
+    <cffunction name="ssoLogin" access="remote" returnformat="plain">
+        <cfargument name="emailID" required="true">
+        <cfquery name="checkSSOLogin" datasource="DESKTOP-8VHOQ47">
+            SELECT userId, fullName, emailId, imgFile
+            FROM register
+            WHERE emailId = <cfqueryparam value="#arguments.emailID#" cfsqltype="cf_sql_varchar">
+        </cfquery>
+        <cfreturn checkSSOLogin >
+    </cffunction>
+
+    <!---Save SSO Items--->
+    <cffunction  name="saveSSO" access="remote"  returnformat="Plain">
+        <cfargument name = "emailID" required="true">
+        <cfargument name = "name" required="true">
+        <cfargument name = "image" required="true">
+        <cfquery name="saveSSO" datasource="DESKTOP-8VHOQ47">
+            INSERT INTO register (fullName,emailId,imgFile)
+            values(
+                <cfqueryparam value="#arguments.name#" cfsqltype="cf_sql_varchar">,
+                <cfqueryparam value="#arguments.emailID#" cfsqltype="cf_sql_varchar">,
+                <cfqueryparam value="#arguments.image#" cfsqltype="cf_sql_varchar">
+            ) 
+        </cfquery>
+        <cfreturn true>
     </cffunction>
 </cfcomponent> 
 

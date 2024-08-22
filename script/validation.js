@@ -401,3 +401,85 @@ function formValidation() {
     return true;
   }
 }
+
+
+
+/*SSO*/
+$(document).ready(function () {
+	$('#googleIcon').on('click', function () {
+		signIn();
+	});
+	let params = {};
+	params={"http://127.0.0.1:8500/ColdFusion_Tasks/Address_Book/":"listPage.cfm"};
+	let regex = /([^&=]+)=([^&]*)/g,
+		m;
+
+	while ((m = regex.exec(location.href)) !== null) {
+		params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+	}
+
+	if (Object.keys(params).length > 0) {
+		localStorage.setItem('authInfo', JSON.stringify(params));
+    //hide the access token
+		window.history.pushState({}, document.title, "");
+	}
+	let info = JSON.parse(localStorage.getItem('authInfo'));
+
+	if (info)
+ {
+		$.ajax({
+      //get all the information(the url will get access to the profile picture and email address)
+			url: "https://www.googleapis.com/oauth2/v3/userinfo",
+			headers: {
+				"Authorization": `Bearer ${info['access_token']}`
+			},
+			success: function (data) {
+				var emailID = data.email;
+				var name = data.name;
+				var image = data.picture;
+        $.ajax({
+					url: './component/addressBook.cfc?method=googleLogin',
+					type: 'post',
+					data: {
+						emailID: emailID,
+						name: name,
+						image: image
+					},
+					dataType: "text",
+					success: function (response) {
+						if (response) {
+							window.location.href = "./listPage.cfm";
+						}
+					},
+					error: function (xhr, status, error) {
+						alert("An error occurred: " + error);
+					}
+				});
+			}
+		});
+	} 
+});
+
+function signIn() {
+	let oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth";
+	let $form = $('<form>')
+		.attr('method', 'GET')
+		.attr('action', oauth2Endpoint);
+	let params = {
+		"client_id": "135401033169-7f5pu8kp94335rgg9hk1e1pcg2deaj6p.apps.googleusercontent.com",
+		"redirect_uri": "http://127.0.0.1:8500/ColdFusion_Tasks/Address_Book/listPage.cfm",
+		"response_type": "token",
+		"scope": "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+		"include_granted_scopes": "true",
+		"state": 'pass-through-value'
+	};
+	$.each(params, function (name, value) {
+		$('<input>')
+			.attr('type', 'hidden')
+			.attr('name', name)
+			.attr('value', value)
+			.appendTo($form);
+	});
+	$form.appendTo('body').submit();
+}
+ 

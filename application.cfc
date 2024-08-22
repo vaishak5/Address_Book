@@ -10,6 +10,8 @@ component output="false"
         session.userID = "";
         session.fullName = "";
         session.imgFile = "";
+        session.imgProfile="";
+        session.sso="";
         return true;
     }
     public boolean function onRequestStart() {

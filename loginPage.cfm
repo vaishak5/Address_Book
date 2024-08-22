@@ -12,6 +12,7 @@
     <script src="./script/jquery.min.js"></script>
     <script src="./script/jquery-ui.min.js"></script>
     <script src="./script/validation.js"></script>
+    <script src="./script/ssoScript.js"></script>
 </head>
 <body>
     <cfif session.login>
@@ -38,7 +39,7 @@
                     <h1>LOGIN</h1>
                     <div class="mainBodySndCont">
                         <form class="inputConts">
-                            <input type="email" class="inputs" placeholder="USERNAME" id="email">
+                            <input type="email" class="inputs" placeholder="USER NAME" id="email">
                             <input type="password" class="inputs" placeholder="PASSWORD" id="password">
                         </form>
                         <div class="loginBtn">
@@ -47,7 +48,7 @@
                         </div>
                         <div class="anotherAccess">
                             <img class="fb" src="./assets/fb.png" alt="img" width="40" height="40">
-                            <img class="google" src="./assets/google1.png" alt="img" width="30" height="30">
+                            <img class="google" id="googleIcon" src="./assets/google1.png" alt="img" width="30" height="30" >
                         </div>
                         <div class="registerCont">
                             <p class="accountTxt">Don't have an account?</p>

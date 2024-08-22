@@ -18,6 +18,7 @@
       <script src="./script/reset.js"></script>
    </head>
    <body>
+      <cfset variables.image = session.sso ? session.imgFile : "./assets/" & session.imgProfile>
       <cfif session.login>
          <div class="navbar px-5">
             <div class="navbarFt">
@@ -43,7 +44,7 @@
                <div class="bodySnd">
                   <div class="d-flex flex-column  bg-light text-dark me-2 text-center rounded">
                      <div class="userProfile p-2">
-                        <img src="./assets/#session.imgFile#" class="rounded-circle img-fluid" alt="img" width="100">
+                        <img src="#variables.image#" class="rounded-circle img-fluid" alt="img" width="100">
                      </div>
                      <div class="userName p-2 ">#session.fullName#</div>
                         <div class="p-2 ">
