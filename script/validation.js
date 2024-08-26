@@ -107,7 +107,6 @@ $(document).ready(function () {
     formData.append("phoneNumber", phoneNum);
     formData.append("email", email);
     formData.append("pincode", pincode);
-
     if (formValidation()) {
       $.ajax({
         type: "POST",
@@ -186,7 +185,6 @@ $(document).ready(function () {
   });
 
   /*Select datas in the row(all input fields)*/
-
   $(".editBtn").click(function () {
     var contactId = $(this).attr("data-id");
     if (contactId > 0) {
@@ -226,8 +224,8 @@ $(document).ready(function () {
       });
     }
   });
+  
   /*Print Details*/
-
   $("#printButton").on("click", function () {
     var printContent = $("#printableDiv").html();
     $('body').html(printContent);
@@ -402,8 +400,6 @@ function formValidation() {
   }
 }
 
-
-
 /*SSO*/
 $(document).ready(function () {
 	$('#googleIcon').on('click', function () {
@@ -411,21 +407,17 @@ $(document).ready(function () {
 	});
 	let params = {};
 	params={"http://127.0.0.1:8500/ColdFusion_Tasks/Address_Book/":"listPage.cfm"};
-	let regex = /([^&=]+)=([^&]*)/g,
-		m;
-
-	while ((m = regex.exec(location.href)) !== null) {
+	let regex = /([^&=]+)=([^&]*)/g,m;
+  while ((m = regex.exec(location.href)) !== null) {
 		params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
 	}
-
-	if (Object.keys(params).length > 0) {
+  if (Object.keys(params).length > 0) {
 		localStorage.setItem('authInfo', JSON.stringify(params));
     //hide the access token
 		window.history.pushState({}, document.title, "");
 	}
 	let info = JSON.parse(localStorage.getItem('authInfo'));
-
-	if (info)
+  if (info)
  {
 		$.ajax({
       //get all the information(the url will get access to the profile picture and email address)

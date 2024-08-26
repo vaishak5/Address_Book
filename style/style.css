@@ -193,7 +193,7 @@ h1{
     display: flex;
     gap: 20px;
 }
-.downloadSet img{
+.downloadSet img, .fb, .google{
     cursor:pointer;
 }
 .body{
@@ -311,14 +311,3 @@ h1{
     width:300px;
     height:auto;
 }
-.fb,.google{
-    cursor:pointer;
-}
-
-
-
-
-
-
-
-

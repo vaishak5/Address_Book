@@ -12,7 +12,6 @@
     <script src="./script/jquery.min.js"></script>
     <script src="./script/jquery-ui.min.js"></script>
     <script src="./script/validation.js"></script>
-    <script src="./script/ssoScript.js"></script>
 </head>
 <body>
     <cfif session.login>

@@ -98,6 +98,7 @@
             <cfset session.fullName=checkuserId.fullName>
             <cfset session.imgFile = checkuserId.imgFile>
             <cfset session.login=true>
+            <cfset session.sso=false>
             <cfreturn "true">
         <cfelse>
             <cfset session.login=false>
@@ -250,7 +251,7 @@
     </cffunction>
 
     <!---SSO--->
-    <cffunction name="googleLogin" access="remote" returnFormat="PLAIN" output="false">
+    <cffunction name="googleLogin" access="remote" returnFormat="PLAIN">
         <cfargument name="emailID" required="true">
         <cfargument name="name" required="true">
         <cfargument name="image" required="true">
@@ -258,26 +259,26 @@
         <cfset var ssoLogin = {} >
         <cfset var saveSSO = {} >
         <cfset var response = "">
-        <cfset ssoLogin = result.ssoLogin(arguments.emailID) ><!--- Check if user already exists in Google login --->
+        <cfset ssoLogin = result.ssoLogin(arguments.emailID, arguments.name, arguments.image) ><!--- Check if user already exists in Google login --->
         <cfif ssoLogin.recordCount>
             <cfset session.login = true>
-            <cfset session.sso = true>
+            <cfset session.sso = true> 
             <cfset session.fullName = ssoLogin.fullName>
-            <cfset session.imgFile = ssoLogin.imgFile>
-            <cfset session.userID = ssoLogin.userId>
-            <cfset response=true>
+            <cfset session.imgProfile = ssoLogin.imgFile>
+            <cfset session.userId = ssoLogin.userId>
+            <cfset response = true>
         <cfelse>
-            <cfset saveSSO = result.saveSSO(arguments.emailID, arguments.name, arguments.image)><!--- Save user in SSO --->
+            <cfset saveSSO = result.saveSSO(arguments.emailID, arguments.name, arguments.image)> <!--- Save user in SSO --->
             <cfif saveSSO>
                 <cfset ssoLogin = result.ssoLogin(arguments.emailID)>
                 <cfif ssoLogin.recordCount>
                     <cfset session.login = true>
-                    <cfset session.sso = true>
+                    <cfset session.sso = true> 
                     <cfset session.fullName = ssoLogin.fullName>
-                    <cfset session.imgFile = ssoLogin.imgFile>
-                    <cfset session.userID = ssoLogin.userId>
+                    <cfset session.imgProfile = ssoLogin.imgFile>
+                    <cfset session.userId = ssoLogin.userId>
                 </cfif>
-                <cfset response=true>
+                <cfset response = true>
             </cfif>
         </cfif>
         <cfreturn response >

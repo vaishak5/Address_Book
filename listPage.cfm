@@ -18,7 +18,11 @@
       <script src="./script/reset.js"></script>
    </head>
    <body>
-      <cfset variables.image = session.sso ? session.imgFile : "./assets/" & session.imgProfile>
+      <cfif session.sso>
+         <cfset variables.image = session.imgProfile>
+      <cfelse>
+         <cfset variables.image = "./assets/" & session.imgFile>
+      </cfif>
       <cfif session.login>
          <div class="navbar px-5">
             <div class="navbarFt">
@@ -207,11 +211,7 @@
                                        <td class="nameList">#contact.getfirstName()# #contact.getlarstName()#</td>
                                        <td class="emailList">#contact.getemailID()#</td>
                                        <td class="phoneList">#contact.getphoneNumber()#</td>
-                                       <td>
-                                          <button type="submit" class="btn btn-primary editBtn" data-bs-toggle="modal" data-bs-target="##exampleModal" data-id="#variables.contactId#">
-                                          Edit
-                                          </button>
-                                       </td>
+                                       <td><button type="submit" class="btn btn-primary editBtn" data-bs-toggle="modal" data-bs-target="##exampleModal" data-id="#variables.contactId#">Edit</button></td>
                                        <td><button type="submit" class="btn btn-primary delete"  data-id="#variables.contactId#">Delete</button></td>
                                        <td><button type="button" class="btn btn-primary view" data-bs-toggle="modal" data-bs-target="##exampleModal2"  data-id="#variables.contactId#">View</button></td>
                                        <!--View Modal -->
@@ -277,6 +277,7 @@
                   </div>
                </div>
             </div>
+         </div>
       <cfelse>
          <cflocation  url="loginPage.cfm">
       </cfif>
