@@ -225,7 +225,6 @@
             FROM contactDetails 
             WHERE contactId = <cfqueryparam value="#arguments.contactId#" cfsqltype="cf_sql_integer">
         </cfquery>
-        
         <cfset  local.result = {}>
         <cfif selectInputs.recordCount>
             <cfset local.result['contactId'] = selectInputs.contactId>
@@ -247,7 +246,11 @@
     <!---Log out--->
     <cffunction  name="doLogout" returntype="any" access="remote">
         <cfset session.login=false>
-        <cflocation url="../loginPage.cfm">
+        <cfset session.fullName = "">
+        <cfset session.imgProfile = "">
+        <cfset session.userId = "">
+        <cfset session.sso=false>
+        <cflocation url="../loginPage.cfm" addtoken="false">
     </cffunction>
 
     <!---SSO--->
@@ -260,9 +263,10 @@
         <cfset var saveSSO = {} >
         <cfset var response = "">
         <cfset ssoLogin = result.ssoLogin(arguments.emailID, arguments.name, arguments.image) ><!--- Check if user already exists in Google login --->
+        
         <cfif ssoLogin.recordCount>
-            <cfset session.login = true>
-            <cfset session.sso = true> 
+            <cfset session.login = true>             
+            <cfset session.sso = true>
             <cfset session.fullName = ssoLogin.fullName>
             <cfset session.imgProfile = ssoLogin.imgFile>
             <cfset session.userId = ssoLogin.userId>

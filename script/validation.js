@@ -421,23 +421,25 @@ $(document).ready(function () {
  {
 		$.ajax({
       //get all the information(the url will get access to the profile picture and email address)
-			url: "https://www.googleapis.com/oauth2/v3/userinfo",
+			 url: "https://www.googleapis.com/oauth2/v3/userinfo",
 			headers: {
 				"Authorization": `Bearer ${info['access_token']}`
-			},
+			}, 
 			success: function (data) {
 				var emailID = data.email;
 				var name = data.name;
 				var image = data.picture;
+       
         $.ajax({
 					url: './component/addressBook.cfc?method=googleLogin',
 					type: 'post',
+          dataType: "text",
 					data: {
 						emailID: emailID,
 						name: name,
 						image: image
 					},
-					dataType: "text",
+					
 					success: function (response) {
 						if (response) {
 							window.location.href = "./listPage.cfm";
