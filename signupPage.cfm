@@ -39,12 +39,12 @@
                         <span id="fullNameError" class="error"></span>
                         <input type="email" class="inputs" placeholder="Email ID" id="email">
                         <span id="emailError" class="error"></span>
-                        <input type="email" class="inputs" placeholder="User Name" id="userName">
+                        <input type="text" class="inputs" placeholder="User Name" id="userName">
                         <span id="usernameError" class="error"></span>
                         <input type="password" class="inputs" placeholder="Password" id="password">
                         <span id="passwordError" class="error"></span>
                         <input type="password" class="inputs" placeholder="Confirm Password" id="confirmPassword">
-                         <span id="confirmError" class="error"></span>
+                        <span id="confirmError" class="error"></span>
                         <input type="button" class="submitBtn" id="submitClick" value="Register">
                     </form>
                 </div>

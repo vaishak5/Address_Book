@@ -3,7 +3,9 @@
     padding:0;
 }
 body{
-    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif 
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background-color: #d8e4f0;
+    
 }
 .navbar{
     display: flex;
@@ -23,6 +25,9 @@ body{
 }
 .navbarSnd a:hover{
     text-decoration:underline;
+}
+.navbarFt h2{
+    cursor:default;
 }
 h2{
     color:white;
@@ -44,7 +49,7 @@ h2{
     border-bottom: 1px solid #606060;
     width: 300px;
     outline: none;
-    padding: 10px;
+    padding: 15px;
 }
 h1{
     text-align: center;
@@ -92,6 +97,7 @@ h1{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: center;
 }
 .mainBodySndCont{
     margin-top: 15px;
@@ -102,6 +108,9 @@ h1{
 .registerCont a{
     color: #2874F0;
     text-decoration: none;
+}
+.registerCont a:hover{
+    text-decoration: underline;
 }
 .mainBodySnd{
     background-color: white;
@@ -127,6 +136,75 @@ h1{
     padding: 28px;
     
 }
+.error{
+    height:10px;
+}
+.inputConts{
+    display:flex;
+    flex-direction: column;
+}
+.submitBtnn{
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #2874F0;
+    color: #337ab7;
+    background-color: #d8e4f0;
+    cursor:pointer;
+    width:50%;
+    
+}
+.navbarSndSet{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right:50px;
+}
+.navbarSndSet a{
+    color:white;
+    text-decoration: none;
+    
+}
+.bodyFt{
+    display: flex;
+    justify-content: flex-end;
+    border: 1px solid black;
+    margin-top: 20px;
+    width: 80%;
+    background-color: white;
+    border-radius: 10px;
+    border-style: none;
+}
+.downloadSet{
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+.body{
+    display: flex;
+    justify-content: center;
+}
+.mainSet{
+    background-color: #d8e4f0;
+    height:91vh;
+}
+.bodyConts{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.bodySnd{
+    width: 20%;
+}
+.bodyThd{
+    width: 80%;
+}
+.navbarFt h3{
+    color:white;
+}
+
 
 
 

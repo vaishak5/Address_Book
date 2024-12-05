@@ -1,11 +1,11 @@
 $(document).ready(function(){
-    $("#submitClick").on("click", function () {
+    /*SIGN IN*/
+    $("#submitClick").click(function () {
         var fullName=$("#fullName").val().trim();
         var emailId=$("#email").val().trim();
         var userName=$("#userName").val().trim();
         var password=$("#password").val().trim();
-        var confirmPassword=$("#confirmPassword").val().trim();
-        if(signValidation()){
+       if(signValidation()){
             $.ajax({
                 type: "POST",
                 url: "./component/addressBook.cfc?method=signUpload",
@@ -14,14 +14,16 @@ $(document).ready(function(){
                     emailId: emailId,
                     userName:userName,
                     password: password,
-                    confirmPassword:confirmPassword
                 },
+             
                 success: function(response) {
-                    if (response === true) {
+                    console.log(response);
+                    if (response =="true") {
                         alert("Form submitted successfully!");
                         window.location.href = "./loginPage.cfm";
-                    } else if (response === false) { 
+                    } else { 
                         alert("Username already exists!");
+                        window.location.reload();
                     }
                 },
                 error: function(xhr, status, error) { 
@@ -32,6 +34,39 @@ $(document).ready(function(){
         }
         return false;
     });
+
+    /*LOGIN*/ 
+    $("#loginSubmit").click(function ()  {
+        var emailId=$("#email").val().trim();
+        var password=$("#password").val().trim();
+        if(emailId==""|| password==""){
+            alert("Invalid username and Password!");
+            return;
+        }
+        else{
+            
+            $.ajax({
+                type: "POST",
+                url: "./component/addressBook.cfc?method=checkLogin",
+                datatype: "text",
+                data: {emailId:emailId,
+                    password: password
+                },
+                success: function(response) {
+                    if (response === "true") {
+                        alert("Login Successfully!!!")
+                        window.location.href = "./listPage.cfm";
+                    } else  { 
+                        alert("User Not Found!!!");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert("An error occurred while submitting the form. Please try again.");
+                }
+            });
+        }
+    });   
 });
 function signValidation(){
     var fullName=$("#fullName").val().trim();
@@ -66,7 +101,7 @@ function signValidation(){
             $("#emailError").show();
             isValid = false;
         }
-        if(!(/\S+@\S+\.\S+/.test(userName)) ||  userName==""){
+        if(userName==""){
             $("#usernameError").html("Please enter a valid User Name.").css("color","red");
             $("#usernameError").show();
             isValid = false;
@@ -76,20 +111,27 @@ function signValidation(){
             $("#passwordError").show();
             isValid = false;
         }
+        else if (!isValidPassword(password)) {
+            $("#passwordError").html("Password must contain all kind of formats!").css("color","red");
+            $("#passwordError").show();
+            isValid = false;
+        }
         if(confirmPassword==""){
             $("#confirmError").html("Please enter the correct password").css("color","red");
             $("#confirmError").show();
         }
-
         if (password != confirmPassword){
             $("#confirmError").html("Please enter correct password").css("color","red");
             $("#confirmError").show();
             isValid = false;
         }
-        
     }
     if(isValid){
         return true;
     }
     return false;
+}
+function isValidPassword(password) {
+    var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    return passwordRegex.test(password);
 }
