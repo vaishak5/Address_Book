@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/jquery-ui.css">
+    <script src="./script/sourceFirst.js"></script>
+    <script src="./script/sourceSecond.js"></script>
+    <script src="./script/sourceThird.js"></script>
+    <script src="./script/jquery.min.js"></script>
+    <script src="./script/jquery-ui.min.js"></script>
+    <script src="./script/validation.js"></script>
 </head>
 <body>
     <div class="navbar">
@@ -28,11 +35,11 @@
                 <h1>LOGIN</h1>
                 <div class="mainBodySndCont">
                     <form class="inputConts">
-                        <input type="text" class="inputs" placeholder="USERNAME">
-                        <input type="password" class="inputs" placeholder="PASSWORD">
+                        <input type="email" class="inputs" placeholder="USERNAME" id="email">
+                        <input type="password" class="inputs" placeholder="PASSWORD" id="password">
                     </form>
                     <div class="loginBtn">
-                        <a href="listPage.cfm">LOGIN</a>
+                        <input type="button" class="submitBtnn" id="loginSubmit" value="Login">
                         <p class="singinTxt"> Or Sign In Using</p>
                     </div>
                     <div class="anotherAccess">
